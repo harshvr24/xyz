@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
+import { site } from '@/lib/site'
 
 type CookieConsent = 'accepted' | 'declined'
 
 const consentMaxAge = 60 * 60 * 24 * 365
 
-const consent = useCookie<CookieConsent | null>('byroose-cookie-consent', {
+const consent = useCookie<CookieConsent | null>(site.cookieName, {
 	default: () => null,
 	maxAge: consentMaxAge,
 	path: '/',

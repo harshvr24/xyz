@@ -139,7 +139,7 @@ onScopeDispose(unlockScroll);
 }
 
 .about-member-name {
-	@apply text-3xl leading-none font-bold tracking-[-0.045em] md:text-4xl xl:text-5xl;
+	@apply text-3xl leading-none font-bold tracking-[-0.025em] md:text-4xl xl:text-5xl;
 }
 
 .about-member-role {

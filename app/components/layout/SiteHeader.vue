@@ -4,36 +4,25 @@ import type { CSSProperties } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import SiteMenu from "@/components/layout/SiteMenu.vue";
 import SiteNavLink from "@/components/layout/SiteNavLink.vue";
+import SiteWordmark from "@/components/layout/SiteWordmark.vue";
 import { Button, ButtonIcon } from "@/components/ui/button";
+import { site } from "@/lib/site";
+import type { SiteLink } from "@/lib/site";
 
 defineOptions({ inheritAttrs: false });
 
-interface NavItem {
-   href: string;
-   label: string;
-}
-
-const defaultNavItems: NavItem[] = [
-   { href: "/", label: "Home" },
-   { href: "/works", label: "Works" },
-   { href: "/services", label: "Services" },
-   { href: "/about", label: "About" },
-   // { href: '/courses', label: 'Courses' },
-   { href: "/blog", label: "Blog" },
-   { href: "/contact", label: "Contact" },
-];
-
 const {
-   ctaHref = "/contact",
-   ctaLabel = "Start a project",
+   ctaHref = site.enquiryRoute,
+   ctaLabel = site.enquiryLabel,
    navItems,
 } = defineProps<{
    ctaHref?: string;
    ctaLabel?: string;
-   navItems?: NavItem[];
+   navItems?: readonly SiteLink[];
 }>();
 
-const resolvedNavItems = computed(() => navItems ?? defaultNavItems);
+const homeLabel = `${site.name} home`;
+const resolvedNavItems = computed(() => navItems ?? site.navItems);
 const menuOpen = shallowRef(false);
 const headerCtaVariant = computed(() => (menuOpen.value ? "default" : "dark"));
 const isDesktop = useMediaQuery("(min-width: 64rem)");
@@ -158,11 +147,11 @@ watch([headerMode, isDesktop], ([mode, desktop]) => {
          <NuxtLink
             class="site-logo-link"
             to="/"
-            aria-label="byroose home"
+            :aria-label="homeLabel"
             data-header-rise
             @click="handleLogoClick"
          >
-            <span class="site-logo" aria-hidden="true" />
+            <SiteWordmark class="site-logo" aria-hidden="true" />
          </NuxtLink>
       </span>
    </div>
@@ -187,9 +176,8 @@ watch([headerMode, isDesktop], ([mode, desktop]) => {
    @apply flex shrink-0 items-center;
 }
 
-.site-logo {
-   @apply block aspect-[680/192] h-7 bg-background sm:h-8.5;
-   mask: url("/logo.svg") center / contain no-repeat;
+.site-logo-link .site-logo {
+   @apply text-2xl leading-none text-background sm:text-3xl;
 }
 
 .site-nav {

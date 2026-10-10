@@ -259,7 +259,7 @@ function setDescriptionSplit(index: number, parts: SplitTextResult) {
 }
 
 .service-title {
-   @apply m-0 w-full text-left text-service font-bold tracking-[-0.045em] text-balance;
+   @apply m-0 w-full text-left text-service font-bold tracking-[-0.025em] text-balance;
 }
 
 .service-description {

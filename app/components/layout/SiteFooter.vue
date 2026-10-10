@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { computed, useTemplateRef } from "vue";
+import type { ComponentPublicInstance } from "vue";
 import { useNow } from "@vueuse/core";
 import { NuxtLink } from "#components";
 import SiteNavLink from "@/components/layout/SiteNavLink.vue";
+import SiteWordmark from "@/components/layout/SiteWordmark.vue";
 import WaveUnderline from "@/components/shared/WaveUnderline.vue";
 import { Button } from "@/components/ui/button";
+import { ranges } from "@/lib/catalogue/ranges";
 import { appIcons } from "@/lib/icons";
-
-interface FooterLink {
-	href: string;
-	label: string;
-}
+import { site } from "@/lib/site";
+import type { SiteLink } from "@/lib/site";
 
 interface SloganLine {
 	lead: string;
@@ -18,51 +18,35 @@ interface SloganLine {
 	underlined: string;
 }
 
-const contactRoute = "/contact";
-const email = "info@byroose.com";
-const headquarters = "Yerevan, Armenia";
-const creditHref = "https://www.linkedin.com/in/razmatinyan/";
 const now = useNow({ interval: 60_000 });
-const armeniaTimeFormatter = new Intl.DateTimeFormat("en-US", {
+const localTimeFormatter = new Intl.DateTimeFormat("en-US", {
 	hour: "2-digit",
 	minute: "2-digit",
 	hour12: true,
-	timeZone: "Asia/Yerevan",
+	timeZone: site.timeZone,
 });
-const armeniaTime = computed(
-	() => `${armeniaTimeFormatter.format(now.value)} (GMT +4)`,
+const localTime = computed(
+	() => `${localTimeFormatter.format(now.value)} (${site.timeZoneLabel})`,
 );
-const armeniaDateTime = computed(() => now.value.toISOString());
+const localDateTime = computed(() => now.value.toISOString());
+const localTimeFallback = `--:-- -- (${site.timeZoneLabel})`;
 
 const sloganLines: SloganLine[] = [
-	{ lead: "From", underlineColor: "var(--color-ribbon)", underlined: "seen" },
-	{ lead: "to", underlineColor: "var(--color-primary)", underlined: "chosen" },
+	{ lead: "Made by", underlineColor: "var(--color-ribbon)", underlined: "hand" },
+	{ lead: "made to", underlineColor: "var(--color-primary)", underlined: "last" },
 ];
 
-const navigationLinks: FooterLink[] = [
-	{ href: "/", label: "Home" },
-	{ href: "/works", label: "Works" },
-	{ href: "/services", label: "Services" },
-	{ href: "/about", label: "About" },
-	{ href: "/blog", label: "Blog" },
-	{ href: contactRoute, label: "Contact" },
-];
-
-const policyLinks: FooterLink[] = [
-	{ href: "/terms", label: "Terms & Conditions" },
-	{ href: "/privacy", label: "Privacy Policy" },
-];
-
-const socialLinks: FooterLink[] = [
-	{ href: "#", label: "X" },
-	{ href: "#", label: "LinkedIn" },
-	{ href: "#", label: "Instagram" },
-];
+const collectionLinks: SiteLink[] = ranges.map((range) => ({
+	href: `/collections/${range.slug}`,
+	label: range.name,
+}));
 
 const footerRoot = useTemplateRef<HTMLElement>("footerRoot");
 const footerContent = useTemplateRef<HTMLElement>("footerContent");
 const footerShade = useTemplateRef<HTMLElement>("footerShade");
 const backToTop = useTemplateRef<HTMLElement>("backToTop");
+const footerWordmark =
+	useTemplateRef<ComponentPublicInstance>("footerWordmark");
 const { scrollTo } = useSmoothScroll();
 
 useFooterMotion({
@@ -71,6 +55,7 @@ useFooterMotion({
 	shade: footerShade,
 });
 useArrowSwapHover(backToTop, { direction: "up", scale: false });
+useFitText(footerWordmark);
 
 function scrollToTop() {
 	scrollTo(0);
@@ -108,11 +93,11 @@ function scrollToTop() {
 								<Button
 									class="site-footer-cta"
 									:as="NuxtLink"
-									:to="contactRoute"
+									:to="site.enquiryRoute"
 									variant="light"
 									size="cta-lg"
 								>
-									Book a Call
+									{{ site.enquiryLabel }}
 								</Button>
 							</span>
 						</span>
@@ -122,8 +107,8 @@ function scrollToTop() {
 						<p class="site-footer-email-label">Or write directly to</p>
 						<div class="site-footer-item-text">
 							<SiteNavLink
-								:href="`mailto:${email}`"
-								:label="email"
+								:href="`mailto:${site.email}`"
+								:label="site.email"
 								size="inherit"
 							/>
 						</div>
@@ -143,7 +128,7 @@ function scrollToTop() {
 								Navigation
 							</h2>
 							<ul class="site-footer-list site-footer-item-text">
-								<li v-for="link in navigationLinks" :key="link.href">
+								<li v-for="link in site.navItems" :key="link.href">
 									<SiteNavLink
 										:href="link.href"
 										:label="link.label"
@@ -154,14 +139,17 @@ function scrollToTop() {
 						</nav>
 
 						<div class="site-footer-column">
-							<h2 id="site-footer-socials" class="site-footer-heading">
-								Social Media
+							<h2
+								id="site-footer-collections"
+								class="site-footer-heading"
+							>
+								Collections
 							</h2>
 							<ul
 								class="site-footer-list site-footer-item-text"
-								aria-labelledby="site-footer-socials"
+								aria-labelledby="site-footer-collections"
 							>
-								<li v-for="link in socialLinks" :key="link.label">
+								<li v-for="link in collectionLinks" :key="link.href">
 									<SiteNavLink
 										:href="link.href"
 										:label="link.label"
@@ -175,25 +163,25 @@ function scrollToTop() {
 							<h2 class="site-footer-heading">Located in</h2>
 							<div class="site-footer-headquarters">
 								<p class="site-footer-location site-footer-item-text">
-									{{ headquarters }}
+									{{ site.headquarters }}
 								</p>
 								<ClientOnly>
 									<time
 										class="site-footer-time"
-										:datetime="armeniaDateTime"
+										:datetime="localDateTime"
 									>
-										{{ armeniaTime }}
+										{{ localTime }}
 									</time>
 									<template #fallback>
-										<span class="site-footer-time"
-											>--:-- -- (GMT +4)</span
-										>
+										<span class="site-footer-time">{{
+											localTimeFallback
+										}}</span>
 									</template>
 								</ClientOnly>
 							</div>
 							<nav class="site-footer-policy-links" aria-label="Legal">
 								<ul class="site-footer-list site-footer-item-text">
-									<li v-for="link in policyLinks" :key="link.href">
+									<li v-for="link in site.policyLinks" :key="link.href">
 										<SiteNavLink
 											:href="link.href"
 											:label="link.label"
@@ -207,17 +195,8 @@ function scrollToTop() {
 
 					<div class="site-footer-bottom site-footer-item-text">
 						<div class="site-footer-credits">
-							<p>
-								Website by
-								<SiteNavLink
-									:href="creditHref"
-									label="Razo Codes"
-									size="inherit"
-									target="_blank"
-								/>
-							</p>
-							<p>© 2026 All Rights Reserved</p>
-							<p>byroose inc.</p>
+							<p>© {{ site.copyrightYear }} All Rights Reserved</p>
+							<p>{{ site.legalName }}</p>
 						</div>
 
 						<button
@@ -250,15 +229,10 @@ function scrollToTop() {
 			</div>
 
 			<div class="site-footer-brand">
-				<NuxtImg
+				<SiteWordmark
+					ref="footerWordmark"
 					class="site-footer-logo"
-					src="/logo.svg"
-					alt="byroose"
-					width="680"
-					height="192"
-					format="svg"
-					provider="none"
-					loading="lazy"
+					aria-hidden="true"
 				/>
 			</div>
 		</div>
@@ -309,7 +283,7 @@ function scrollToTop() {
 
 .site-footer-title-action-row {
 	@apply flex gap-[0.1em];
-	width: 4.52em;
+	width: 5.53em;
 	margin-top: 0.45em;
 }
 
@@ -331,7 +305,7 @@ function scrollToTop() {
 }
 
 .site-footer-cta {
-	@apply h-full min-h-0 w-full;
+	@apply h-full min-h-0 w-full font-sans;
 	gap: 0.6em;
 	padding-inline: 1em;
 	font-size: max(0.25em, 0.875rem);
@@ -419,10 +393,14 @@ function scrollToTop() {
 
 .site-footer-brand {
 	@apply mt-16 overflow-hidden md:mt-24 xl:mt-32;
-	aspect-ratio: 680 / 128;
+	container-type: inline-size;
 }
 
-.site-footer-logo {
-	@apply block h-auto w-full;
+.site-footer-brand .site-footer-logo {
+	--site-footer-logo-size: 18cqi;
+	@apply block w-max;
+	margin-bottom: -0.1em;
+	font-size: calc(var(--site-footer-logo-size) * var(--fit-text-scale, 1));
+	line-height: 0.74;
 }
 </style>

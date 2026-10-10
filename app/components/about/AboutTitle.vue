@@ -74,7 +74,7 @@ const segmentedLines = computed(() =>
 @reference '../../assets/css/tailwind.css';
 
 .about-title {
-   @apply m-0 font-bold tracking-[-0.05em];
+   @apply m-0 font-bold tracking-[-0.03em];
    line-height: 0.88;
    margin-top: -0.2em;
 }

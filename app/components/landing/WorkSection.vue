@@ -34,7 +34,7 @@ const caseStudies: CaseStudy[] = [
 			{ label: "Views earned across the launch", value: "11M" },
 			{ label: "Cutdowns delivered in one sprint", value: "60" },
 		],
-		revealTones: ["blue", "green", "yellow", "primary"],
+		revealTones: ["navy", "forest", "gold", "primary"],
 		tone: "primary",
 	},
 	{
@@ -47,8 +47,8 @@ const caseStudies: CaseStudy[] = [
 			{ label: "More qualified enquiries", value: "41%" },
 			{ label: "Organic traffic to category pages", value: "3.2x" },
 		],
-		revealTones: ["pink", "primary", "blue", "yellow"],
-		tone: "yellow",
+		revealTones: ["tan", "primary", "navy", "gold"],
+		tone: "gold",
 	},
 	{
 		client: "Halden Clinics",
@@ -60,8 +60,8 @@ const caseStudies: CaseStudy[] = [
 			{ label: "Increase in completed bookings", value: "+38%" },
 			{ label: "From brief to a live booking flow", value: "5 wks" },
 		],
-		revealTones: ["green", "yellow", "primary", "pink"],
-		tone: "pink",
+		revealTones: ["forest", "gold", "primary", "tan"],
+		tone: "tan",
 	},
 	{
 		client: "Marrow & Co",
@@ -73,8 +73,8 @@ const caseStudies: CaseStudy[] = [
 			{ label: "Conversion rate, up from 3.1%", value: "4.7%" },
 			{ label: "Lower bounce rate on the offer page", value: "-24%" },
 		],
-		revealTones: ["yellow", "blue", "pink", "green"],
-		tone: "green",
+		revealTones: ["gold", "navy", "tan", "forest"],
+		tone: "forest",
 	},
 ];
 

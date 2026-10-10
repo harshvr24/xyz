@@ -226,7 +226,7 @@ function openWorks(event: MouseEvent) {
 }
 
 .more-works-title {
-	@apply relative z-10 m-0 grid w-full items-center leading-none font-bold tracking-[-0.045em] whitespace-nowrap uppercase mix-blend-exclusion;
+	@apply relative z-10 m-0 grid w-full items-center leading-none font-bold tracking-[-0.025em] whitespace-nowrap uppercase mix-blend-exclusion;
 	grid-template-columns: 1fr calc(var(--more-works-image) * 0.4) 1fr;
 	font-size: clamp(2.75rem, 11vw, 13rem);
 }

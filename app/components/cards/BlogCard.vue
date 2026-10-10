@@ -10,7 +10,7 @@ import { appIcons } from '@/lib/icons'
 import { surfaceTones } from '@/lib/surfaces'
 import { cn, formatPublishDate } from '@/lib/utils'
 
-type BlogCardTone = 'green' | 'pink' | 'yellow'
+type BlogCardTone = 'forest' | 'gold' | 'tan'
 
 const {
 	category,
@@ -19,7 +19,7 @@ const {
 	image,
 	publishedAt,
 	title,
-	tone = 'pink',
+	tone = 'tan',
 } = defineProps<{
 	category: string
 	class?: HTMLAttributes['class']
@@ -139,7 +139,7 @@ const publishedLabel = computed(() => formatPublishDate(publishedAt))
 }
 
 .blog-card-title {
-	@apply m-0 text-2xl leading-[0.95] font-semibold tracking-[-0.045em] md:text-xl lg:text-3xl xl:text-4xl;
+	@apply m-0 text-2xl leading-[0.95] font-semibold tracking-[-0.025em] md:text-xl lg:text-3xl xl:text-4xl;
 }
 
 .blog-card-title :deep(.split-text-line),

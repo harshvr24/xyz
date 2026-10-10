@@ -15,21 +15,21 @@ const articles = [
 		category: 'AI content creation',
 		publishedAt: '2026-09-22',
 		image: '/images/hero/3.png',
-		tone: 'pink' as const,
+		tone: 'tan' as const,
 	},
 	{
 		title: 'Why AI video still looks stock, and how we fix it',
 		category: 'AI content creation',
 		publishedAt: '2026-09-08',
 		image: '/images/hero/4.png',
-		tone: 'yellow' as const,
+		tone: 'gold' as const,
 	},
 	{
 		title: 'How we ship a website in five weeks',
 		category: 'Web development',
 		publishedAt: '2026-08-25',
 		image: '/images/hero/6.png',
-		tone: 'green' as const,
+		tone: 'forest' as const,
 	},
 ]
 

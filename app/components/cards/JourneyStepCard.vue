@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/card'
 import SplitText from '@/components/shared/SplitText.vue'
 import type { SplitTextResult } from '@/lib/split-text'
 
-type Theme = 'blue' | 'orange' | 'white'
+type Theme = 'forest' | 'ivory' | 'oxblood'
 
 const {
 	action,
@@ -16,7 +16,7 @@ const {
 	class: className,
 	image,
 	number,
-	theme = 'white',
+	theme = 'ivory',
 	title,
 } = defineProps<{
 	action: string
@@ -31,13 +31,13 @@ const {
 const servicesRoute = '/services'
 
 const actionVariants: Record<Theme, ButtonVariant> = {
-	blue: 'light',
-	orange: 'light',
-	white: 'dark',
+	forest: 'light',
+	oxblood: 'light',
+	ivory: 'dark',
 }
 
 const actionRolloverTones: Partial<Record<Theme, RolloverTones>> = {
-	orange: ['blue', 'green', 'dark'],
+	oxblood: ['navy', 'forest', 'dark'],
 }
 
 const emit = defineEmits<{
@@ -46,9 +46,9 @@ const emit = defineEmits<{
 }>()
 
 const surfaceClasses: Record<Theme, string> = {
-	blue: 'surface-blue',
-	orange: 'surface-orange',
-	white: 'surface-paper',
+	forest: 'surface-forest',
+	oxblood: 'surface-oxblood',
+	ivory: 'surface-paper',
 }
 </script>
 
@@ -62,7 +62,7 @@ const surfaceClasses: Record<Theme, string> = {
 			:class="
 				cn(
 					'journey-step-number',
-					theme === 'white' ? 'text-current/25' : 'text-current/40',
+					theme === 'ivory' ? 'text-current/25' : 'text-current/40',
 				)
 			"
 		>
@@ -138,7 +138,7 @@ const surfaceClasses: Record<Theme, string> = {
 
 .journey-step-title,
 .journey-step-number {
-	@apply m-0 min-w-0 leading-[0.85] font-bold tracking-[-0.05em] wrap-break-word;
+	@apply m-0 min-w-0 leading-[0.85] font-bold tracking-[-0.03em] wrap-break-word;
 }
 
 .journey-step-title {

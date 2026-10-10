@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
+import { site } from './app/lib/site'
+
+const robots =
+	site.contentStatus === 'final' ? 'index, follow' : 'noindex, nofollow'
 
 export default defineNuxtConfig({
 	compatibilityDate: '2025-07-15',
@@ -7,15 +11,13 @@ export default defineNuxtConfig({
 
 	app: {
 		head: {
-			title: 'byroose | Creative agency',
+			title: `${site.name} | ${site.tagline}`,
 			htmlAttrs: { lang: 'en' },
 			meta: [
-				{
-					name: 'description',
-					content:
-						'byroose is a creative agency for AI content creation and web development. Visuals, video and reels, plus websites designed to convert.',
-				},
+				{ name: 'description', content: site.description },
+				{ name: 'robots', content: robots },
 			],
+			link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
 		},
 	},
 
@@ -33,6 +35,13 @@ export default defineNuxtConfig({
 				styles: ['normal'],
 				subsets: ['latin'],
 			},
+			{
+				name: 'Boska',
+				provider: 'fontshare',
+				weights: [400, 500, 700],
+				styles: ['normal', 'italic'],
+				subsets: ['latin'],
+			},
 		],
 	},
 	icon: {
@@ -48,10 +57,14 @@ export default defineNuxtConfig({
 				'lucide:arrow-right',
 				'lucide:arrow-up',
 				'lucide:arrow-up-right',
+				'lucide:check',
 				'lucide:github',
 				'lucide:instagram',
 				'lucide:linkedin',
+				'lucide:mail',
+				'lucide:map-pin',
 				'lucide:minus',
+				'lucide:phone',
 				'lucide:plus',
 				'lucide:x',
 			],

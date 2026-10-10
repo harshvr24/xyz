@@ -12,7 +12,7 @@ const {
 	image,
 	imageAlt,
 	results,
-	revealTones = ["primary", "yellow", "blue", "green"],
+	revealTones = ["primary", "gold", "navy", "forest"],
 	tone = "primary",
 } = defineProps<{
 	class?: HTMLAttributes["class"]
@@ -133,7 +133,7 @@ const emit = defineEmits<{
 }
 
 .case-title {
-	@apply m-0 pb-[0.12em] text-5xl leading-none font-bold tracking-[-0.045em] md:text-6xl xl:text-[5rem];
+	@apply m-0 pb-[0.12em] text-5xl leading-none font-bold tracking-[-0.025em] md:text-6xl xl:text-[5rem];
 }
 
 .case-description {

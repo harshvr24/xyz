@@ -22,7 +22,7 @@ export const buttonVariants = cva(
 				ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
 				link: "text-primary underline-offset-4 hover:underline",
 				ribbon: "bg-ribbon text-ribbon-foreground hover:bg-foreground hover:text-background",
-				yellow: "bg-brand-yellow text-brand-yellow-foreground hover:bg-foreground hover:text-background",
+				gold: "bg-brand-gold text-brand-gold-foreground hover:bg-foreground hover:text-background",
 				cream: "bg-brand-cream text-brand-cream-foreground hover:bg-card hover:text-foreground",
 				light: "bg-card text-card-foreground hover:bg-brand-cream hover:text-brand-cream-foreground",
 				inverse:
@@ -58,11 +58,11 @@ export type RolloverTones = readonly [SurfaceTone, SurfaceTone, SurfaceTone];
 export const variantRolloverTones: Partial<
 	Record<ButtonVariant, RolloverTones>
 > = {
-	cream: ["primary", "green", "dark"],
-	light: ["blue", "pink", "primary"],
-	dark: ["green", "pink", "primary"],
-	ribbon: ["yellow", "primary", "dark"],
-	yellow: ["green", "primary", "dark"],
-	default: ["blue", "green", "dark"],
-	outline: ["primary", "green", "dark"],
+	cream: ["primary", "forest", "dark"],
+	light: ["navy", "tan", "primary"],
+	dark: ["forest", "tan", "primary"],
+	ribbon: ["tan", "primary", "dark"],
+	gold: ["forest", "primary", "dark"],
+	default: ["navy", "forest", "dark"],
+	outline: ["primary", "forest", "dark"],
 };

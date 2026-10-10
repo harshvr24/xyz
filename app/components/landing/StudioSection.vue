@@ -108,7 +108,7 @@ function setCopySplit(id: CopyParagraphId, parts: SplitTextResult) {
 }
 
 .studio-statement {
-   @apply m-0 max-w-[22ch] text-statement font-semibold tracking-[-0.035em];
+   @apply m-0 max-w-[22ch] font-heading text-statement font-medium tracking-[-0.02em];
 }
 
 .studio-statement :deep(.split-text-word),

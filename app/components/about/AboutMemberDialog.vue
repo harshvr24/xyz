@@ -41,7 +41,7 @@ function focusDialog(event: Event) {
 		<DialogClose as-child>
 			<Button
 				class="about-member-dialog-close"
-				variant="yellow"
+				variant="gold"
 				size="cta-icon"
 				:aria-label="closeLabel"
 			>
@@ -135,7 +135,7 @@ function focusDialog(event: Event) {
 }
 
 .about-member-dialog-name {
-	@apply m-0 text-5xl leading-[0.9] font-bold tracking-[-0.045em] md:text-6xl lg:text-7xl;
+	@apply m-0 text-5xl leading-[0.9] font-bold tracking-[-0.025em] md:text-6xl lg:text-7xl;
 }
 
 .about-member-dialog-name-word {

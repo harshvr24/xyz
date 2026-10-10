@@ -2,12 +2,9 @@
 import { computed, shallowRef, useTemplateRef } from "vue";
 import type { SplitTextResult } from "@/lib/split-text";
 import BlogSection from "./BlogSection.vue";
-import BrandGrid from "./BrandGrid.vue";
-import CoursesSection from "./CoursesSection.vue";
 import FaqSection from "./FaqSection.vue";
 import HeroSection from "./HeroSection.vue";
 import JourneySection from "./JourneySection.vue";
-import ReviewsSection from "./ReviewsSection.vue";
 import ServicesSection from "./ServicesSection.vue";
 import StudioSection from "./StudioSection.vue";
 import WorkSection from "./WorkSection.vue";
@@ -47,12 +44,9 @@ function setDescriptionSplit(parts: SplitTextResult) {
 			aria-hidden="true"
 		/>
 		<StudioSection />
-		<!-- <BrandGrid /> -->
 		<WorkSection />
 		<ServicesSection />
 		<JourneySection />
-		<!-- <ReviewsSection /> -->
-		<!-- <CoursesSection /> -->
 		<BlogSection />
 		<FaqSection />
 	</div>

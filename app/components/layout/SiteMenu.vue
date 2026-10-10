@@ -7,11 +7,11 @@ import {
 	useTimeoutFn,
 } from '@vueuse/core'
 import SiteMenuLink from '@/components/layout/SiteMenuLink.vue'
+import SiteWordmark from '@/components/layout/SiteWordmark.vue'
+import { site } from '@/lib/site'
+import type { SiteLink } from '@/lib/site'
 
-interface NavItem {
-	href: string
-	label: string
-}
+const homeLabel = `${site.name} home`
 
 type MenuOpenMode = 'click' | 'hover'
 
@@ -23,7 +23,7 @@ const {
 	open = false,
 } = defineProps<{
 	bordered?: boolean
-	navItems: NavItem[]
+	navItems: readonly SiteLink[]
 	open?: boolean
 }>()
 
@@ -229,23 +229,15 @@ onKeyStroke(
 						data-menu-reveal
 					>
 						<span class="site-menu-footer-label"
-							>Creative agency</span
+							>Leather and saddlery</span
 						>
 						<NuxtLink
 							class="site-menu-home"
 							to="/"
-							aria-label="byroose home"
+							:aria-label="homeLabel"
 							@click="handleNavigate('/', $event)"
 						>
-							<NuxtImg
-								class="site-menu-logo"
-								src="/logo.svg"
-								alt="byroose"
-								width="651"
-								height="187"
-								format="svg"
-								provider="none"
-							/>
+							<SiteWordmark class="site-menu-logo" aria-hidden="true" />
 						</NuxtLink>
 					</div>
 				</div>
@@ -312,9 +304,8 @@ onKeyStroke(
 	@apply block rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-background/70;
 }
 
-.site-menu-logo {
-	@apply block h-auto w-28;
-	filter: invert(1);
+.site-menu-home .site-menu-logo {
+	@apply block text-2xl leading-none text-background;
 }
 
 .site-menu-reveal {

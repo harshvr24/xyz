@@ -26,8 +26,8 @@ const {
 	@apply grid place-items-center bg-muted;
 	background-image: repeating-linear-gradient(
 		135deg,
-		oklch(0.91 0.0212 79.09) 0 0.625rem,
-		oklch(0.9406 0.0159 73.68) 0.625rem 1.25rem
+		var(--color-muted) 0 0.625rem,
+		var(--color-brand-cream) 0.625rem 1.25rem
 	);
 }
 
