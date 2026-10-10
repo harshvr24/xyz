@@ -4,7 +4,9 @@ Claude Code must follow AGENTS.md and every document it references. This file is
 
 ## Project snapshot
 
-byroose.com is a Nuxt 4 and Vue 3 website for the byroose creative agency. The current application is a responsive landing experience built with TypeScript, Tailwind CSS v4, Shadcn Vue source components, Nuxt Icon with Lucide, Nuxt Fonts, VueUse, and GSAP.
+This is the website for XYZ Tannery, a working name for a leather and textile house that makes saddlery, horse rugs, horse accessories, and dog products for export buyers. It is a Nuxt 4 and Vue 3 site with a home page, a product catalogue of four ranges and 41 products, craft, about, and awards pages, and a contact page with an enquiry form backed by one Nitro route. It is built with TypeScript, Tailwind CSS v4, Shadcn Vue source components, Nuxt Icon with Lucide, Nuxt Fonts, VueUse, Lenis, and GSAP.
+
+The brand name, contact details, and navigation live in app/lib/site.ts. The catalogue lives in app/lib/catalogue. The site is in placeholder status: see the launch checklist in README.md before it is opened to search engines.
 
 ## Required session startup
 

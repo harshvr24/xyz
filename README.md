@@ -1,12 +1,17 @@
-# byroose creative agency
+# XYZ Tannery
 
-byroose.com is the digital home of byroose, a creative agency for brands that are tired of shouting into the void. The agency brings AI content creation and web development into one connected practice.
+The website for XYZ Tannery, a working name for a leather and textile house that makes saddlery, horse rugs, horse accessories, and dog products for export buyers.
 
-The site is designed to turn a clear point of view into measurable action. It presents the agency's work, services, process, learning products, insights, and contact paths in a bold editorial experience that remains fast, accessible, and easy to use on every screen.
+The site presents the house, its four product ranges, how the goods are made, and a way to request a quote. It is a bold editorial layout in a heritage palette: an ivory canvas, espresso ink, oxblood and gold accents, and serif display type.
 
 ## Project status
 
-The current foundation is a responsive Nuxt landing page converted from the original visual template. It includes a source-owned component system, semantic design tokens, reusable Tailwind class groups, Lucide icons, Lenis smooth scrolling, an SSR-safe GSAP integration, a two-column hero whose title, description, and call to action rise line by line in a route-aware home intro, a scrubbed hero-to-Studio image transition on larger screens, a green ribbon that draws itself behind the Studio section with the scroll on larger screens and stays hidden on mobile, a case study section with per-case reveals, a faint grey line that draws itself behind the case studies with the scroll on larger screens, image parallax, a trailing project preview, and a pinned dark panel that leads to the works route, a services section that blurs its pinned title into focus and grows each service image with the scroll, a full-width journey title that the services section's dark curve spawns character by character, stacked full-height journey step cards that tilt away as the next one covers them, a warm sand blog panel whose title, action, and three tinted article cards reveal on scroll, an FAQ accordion whose items rise in sequence and whose answers expand and reveal line by line, an About route with a centered hero that rises line by line, leaves a trail of work images behind a moving mouse, and drifts behind a grey team section whose member cards open a profile dialog, a green line that draws itself through the team section and a faint grey line that draws itself behind the statement sections and passes under the call to action on larger screens, two statement sections with cycling images, and a green call to action, focused Works, Services, Journey, Courses, Blog, Contact, Terms, and Privacy routes that hand over to each other through an overlap page transition, and a footer that pairs the slogan and a call to action with navigation, social, and headquarters columns and rises out from under the last section of every route in a shared site layout. A cookie notice in that layout records its consent in a cookie, so the banner stays dismissed across visits. Content systems, case studies, forms, analytics, SEO expansion, and additional motion will be added as the project grows.
+The site is complete in structure and in **placeholder status** for content.
+
+- Home, collections, craft, about, awards, contact, terms, and privacy routes are built.
+- The catalogue holds four ranges and 41 products. 25 products carry a placeholder photograph and 16 show a labelled placeholder frame.
+- Team entries, awards, addresses, phone numbers, and the email address are placeholders.
+- While `contentStatus` in `app/lib/site.ts` is `placeholder`, every page is served `noindex, nofollow` and `robots.txt` disallows crawling.
 
 ## Technology
 
@@ -16,7 +21,7 @@ The current foundation is a responsive Nuxt landing page converted from the orig
 - Shadcn Vue with Reka UI
 - Nuxt Icon with Lucide
 - Nuxt Image
-- Nuxt Fonts with Switzer from Fontshare
+- Nuxt Fonts with Boska and Switzer from Fontshare
 - VueUse
 - Lenis
 - GSAP
@@ -28,8 +33,6 @@ Requirements:
 
 - A current Node.js LTS release
 - npm
-
-Install dependencies and start the development server:
 
 ~~~bash
 npm install
@@ -48,20 +51,57 @@ npm run generate
 npm run preview
 ~~~
 
-## Project structure
+`npm run build` prerenders every route, including all range and product pages.
+
+## Configuration
+
+Copy `.env.example` to `.env` and set what the environment needs.
+
+| Variable | Purpose |
+| --- | --- |
+| `NUXT_PUBLIC_SITE_URL` | The public origin, for example `https://www.example.com`. Canonical links, Open Graph URLs, the sitemap, and breadcrumbs use it. Required for a production build. |
+| `NUXT_RESEND_API_KEY` | Server-only key for sending enquiry emails through Resend. |
+| `NUXT_ENQUIRY_TO` | The inbox that receives enquiries. |
+| `NUXT_ENQUIRY_FROM` | The verified sender address for enquiry emails. |
+
+Without the three enquiry values, the form works in development and logs that delivery is not configured. In production it shows the visitor an error with a link to email instead.
+
+Images use the Vercel image provider. To deploy elsewhere, change `image.provider` in `nuxt.config.ts`.
+
+## Where things live
 
 ~~~text
-app/
-  assets/css/       Theme tokens, base styles, and shared Tailwind utilities
-  components/       Landing, layout, card, shared, and UI components with scoped styles
-  composables/      Reusable stateful and side-effect behavior
-  lib/              Pure helpers, shared constants, and icon names
-  plugins/          Nuxt runtime integrations
-docs/               Architecture, rules, design system, content, and workflow
-public/             Static public assets
+app/lib/site.ts        Brand name, contacts, navigation, content status
+app/lib/catalogue/     Ranges and products, one file per range
+app/components/        Page sections, cards, shared blocks, UI primitives
+app/composables/       Motion, SEO, and integration composables
+app/pages/             One file per route
+server/                Enquiry endpoint, sitemap, robots
+shared/schemas/        Validation shared by the form and the server
+public/images/products Product photographs
 ~~~
 
+To rename the company, change `name`, `legalName`, `description`, `tagline`, and `cookieName` in `app/lib/site.ts`.
+
+To add or change a product, edit its range file in `app/lib/catalogue`. To add a photograph, place it under `public/images/products/<range>/` and add an `image` entry with its width, height, and `fit`.
+
 See [Architecture](docs/ARCHITECTURE.md) for dependency boundaries and placement rules.
+
+## Launch checklist
+
+Complete every item before setting `contentStatus` to `final`.
+
+- [ ] Confirm the right to use the design and code this site was built from.
+- [ ] Replace the working name, tagline, and description in `app/lib/site.ts`.
+- [ ] Replace the placeholder email, phone numbers, unit addresses, city, and time zone.
+- [ ] Replace every product photograph marked `status: 'placeholder'` with photography the house owns or has licensed, and add photographs for the 16 products without one.
+- [ ] Supply hero, workshop, and unit photography.
+- [ ] Have the house confirm all product copy, the craft and process copy, and the FAQ answers.
+- [ ] Replace the team placeholders with names, roles, portraits, and profiles.
+- [ ] Replace the awards placeholders with real awards, certificates, and memberships, or remove the page.
+- [ ] Publish the terms and privacy policies.
+- [ ] Set `NUXT_PUBLIC_SITE_URL` and the three enquiry variables, then send a test enquiry.
+- [ ] Set `contentStatus` to `final`, rebuild, and confirm `robots.txt` and the robots meta tag allow indexing.
 
 ## Documentation
 
@@ -75,4 +115,4 @@ See [Architecture](docs/ARCHITECTURE.md) for dependency boundaries and placement
 
 ## Contributing
 
-Keep changes focused, reuse established patterns, and verify the affected behavior before delivery. Review and update the relevant documentation after every feature, refactor, bug fix, dependency update, configuration change, or design-system change. Keep documentation and implementation in the same focused conventional commit, then follow the push policy in [AI workflow and Git delivery](docs/AI_WORKFLOW.md).
+Keep changes focused, reuse established patterns, and verify the affected behavior before delivery. Review and update the relevant documentation with every feature, refactor, bug fix, dependency update, configuration change, or design-system change.

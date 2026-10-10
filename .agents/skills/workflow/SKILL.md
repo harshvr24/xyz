@@ -1,15 +1,15 @@
 ---
-name: roose
-description: Run the complete repository-first workflow for byroose.com tasks. Use whenever the user invokes /roose or $roose, asks to use the roose skill, or requests a change that must begin with a full review of project instructions, documentation, architecture, applicable skills, current implementation, Git state, and relevant history before planning or implementation.
+name: workflow
+description: Run the complete repository-first workflow for the XYZ Tannery site tasks. Use whenever the user invokes /workflow or $workflow, asks to use the workflow skill, or requests a change that must begin with a full review of project instructions, documentation, architecture, applicable skills, current implementation, Git state, and relevant history before planning or implementation.
 compatibility: Requires repository filesystem access and Git. Uses the project-local git skill for commit and push delivery when available.
 metadata:
-  author: byroose
+  author: XYZ Tannery
   version: "1.0.0"
 ---
 
-# Roose repository workflow
+# Repository workflow
 
-Treat the text after `/roose` or `$roose` as the task. Run the task from discovery through delivery while respecting the user's requested action. A request to review or diagnose authorizes investigation and reporting, not an implementation. A request to build, change, or fix authorizes the matching implementation.
+Treat the text after `/workflow` or `$workflow` as the task. Run the task from discovery through delivery while respecting the user's requested action. A request to review or diagnose authorizes investigation and reporting, not an implementation. A request to build, change, or fix authorizes the matching implementation.
 
 The discovery gate exists because this repository keeps product rules, architecture boundaries, design decisions, and delivery requirements in separate sources. Reading only the code or only one guide can produce a locally plausible change that violates the project contract.
 

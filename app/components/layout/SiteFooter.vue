@@ -32,7 +32,7 @@ const localDateTime = computed(() => now.value.toISOString());
 const localTimeFallback = `--:-- -- (${site.timeZoneLabel})`;
 
 const sloganLines: SloganLine[] = [
-	{ lead: "Made by", underlineColor: "var(--color-ribbon)", underlined: "hand" },
+	{ lead: "Made with", underlineColor: "var(--color-ribbon)", underlined: "care" },
 	{ lead: "made to", underlineColor: "var(--color-primary)", underlined: "last" },
 ];
 
@@ -283,7 +283,7 @@ function scrollToTop() {
 
 .site-footer-title-action-row {
 	@apply flex gap-[0.1em];
-	width: 5.53em;
+	width: 6.01em;
 	margin-top: 0.45em;
 }
 

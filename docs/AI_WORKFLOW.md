@@ -1,6 +1,6 @@
 # AI agent workflow
 
-This workflow defines how AI agents plan, implement, verify, commit, push, and hand off changes in byroose.com.
+This workflow defines how AI agents plan, implement, verify, commit, push, and hand off changes in the XYZ Tannery site.
 
 ## 1. Start every new session
 
@@ -48,10 +48,10 @@ otherwise.
 
 Two project-local skills provide explicit entry points for the full repository workflow and final Git delivery:
 
-- `/roose <task>` completes the required documentation, skill, architecture, implementation, and Git reconnaissance before it creates a plan or changes files. It then executes the requested task through verification and delivery.
+- `/workflow <task>` completes the required documentation, skill, architecture, implementation, and Git reconnaissance before it creates a plan or changes files. It then executes the requested task through verification and delivery.
 - `/git [scope]` audits the intended change set, verifies it, creates focused conventional commits, and pushes the current branch with the repository's normal non-force workflow.
 
-Both skills remain subordinate to current user instructions, `AGENTS.md`, and this workflow. `/roose` respects review-only and diagnose-only requests, while `/git` never treats unrelated working tree changes as authorized scope.
+Both skills remain subordinate to current user instructions, `AGENTS.md`, and this workflow. `/workflow` respects review-only and diagnose-only requests, while `/git` never treats unrelated working tree changes as authorized scope.
 
 ## 3. Plan the smallest complete change
 

@@ -224,7 +224,7 @@ function handleDescriptionSplit(parts: SplitTextResult) {
 }
 
 .hero-copy {
-   @apply flex max-w-md flex-col items-start gap-6 lg:col-start-1 lg:row-start-1 lg:max-w-none lg:pt-3;
+   @apply flex max-w-md flex-col items-start gap-6 pt-3 lg:col-start-1 lg:row-start-1 lg:max-w-none;
 }
 
 .hero-description {

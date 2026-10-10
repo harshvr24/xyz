@@ -3,11 +3,11 @@ import type { Range } from './types'
 export const ranges: readonly Range[] = [
 	{
 		description:
-			'Bridles, halters, girths, breastplates, saddles and riding boots, cut and stitched from selected leather and finished by hand. Every piece is shaped around the horse first, then the rider.',
+			'Bridles, halters, girths, breastplates, saddles and riding boots, cut and stitched from selected leather and finished at the bench. Every piece is shaped around the horse first, then the rider.',
 		name: 'Leather goods',
 		slug: 'leather-goods',
 		summary:
-			'Bridles, girths, saddles and riding boots in hand-finished leather.',
+			'Bridles, girths, saddles and riding boots in bench-finished leather.',
 		title: 'Leather Saddlery',
 	},
 	{

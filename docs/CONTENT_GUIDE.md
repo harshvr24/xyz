@@ -1,93 +1,79 @@
 # Content and SEO guide
 
-This guide defines how byroose speaks and how public content should support organic discovery without losing its human voice.
+This guide defines how XYZ Tannery speaks and how public content should support organic discovery without losing its human voice. XYZ Tannery is a working name. The brand name is read from app/lib/site.ts and must never be typed into copy by hand.
 
 ## Brand idea
 
-byroose helps brands turn noise into a clear signal. AI content creation and web development work together so the brand can earn attention, explain its value, and create measurable action.
+XYZ Tannery is a house that makes the gear horses work in and riders trust: leather saddlery, horse rugs, yard accessories, and a range for dogs. One house, four ranges, one standard of finish.
 
-byroose offers exactly two services: AI content creation and web development. AI content creation covers visuals, video, reels, and site imagery produced through an AI pipeline with human editing. Web development covers design, build, and handover. Do not describe strategy, positioning, naming, or paid media as services. Write both service names in sentence case.
+The site sells to export buyers: importers, distributors, brands, and saddlers who order in quantity and often to their own specification. It does not sell to the public and shows no prices.
 
 The core expression is:
 
-> Make noise. Make sense. Make money.
+> Quality you can rely on.
 
 Use this idea as a filter, not as a phrase that must appear everywhere.
 
 ## Slogan
 
-The byroose slogan is:
+The slogan is:
 
-> From seen to chosen
+> Made with care, made to last
 
-It names the journey byroose takes a brand on: from being noticed to being the
-one the audience picks. The core expression above is the internal filter for
-writing. The slogan is the public line that sums up the promise.
-
-- Write it exactly as "From seen to chosen", in sentence case.
+- Write it exactly as "Made with care, made to last", in sentence case.
 - Do not add a period, an exclamation mark, or other trailing punctuation.
-- Do not reword, translate, or split it across two lines of different emphasis.
-  The site footer title is the one approved exception: it sets "From seen" and
-  "to chosen" on two lines above a contact action matched to the first line.
-- Use it where a single brand line belongs, such as the site footer, social
-  profiles, metadata, and pitch materials. Do not repeat it in every section.
+- The site footer title is the one approved layout exception: it sets "Made with care" and "made to last" on two lines above a contact action matched to the first line.
+- Use it where a single brand line belongs, such as the site footer, social profiles, and metadata. Do not repeat it in every section.
 
 ## Audience
 
-Write primarily for founders, marketing leaders, and growing teams that need stronger creative output and a website that earns its keep.
+Write primarily for trade buyers who know horses and tack. They want to know what is made, how it is made, what can be customised, and how to start an order.
 
-Do not assume every reader understands agency terminology. Explain the business value in plain language.
+Do not explain what a girth is. Do explain what makes this one worth ordering.
 
 ## Voice
 
-The byroose voice is:
+The voice is:
 
-- Clear and direct
-- Confident without arrogance
-- Playful without becoming vague
-- Commercial without sounding pushy
-- Specific without unnecessary jargon
-- Human, concise, and useful
+- Plain and precise, like a good saddler describing their work
+- Confident without boasting
+- Warm without being chatty
+- Specific about materials, construction, and fit
+- Unhurried
 
-Prefer a sharp concrete statement over abstract agency language. Explain what changes for the client, how byroose contributes, and why the result matters.
+Prefer a concrete statement about the product over an abstract claim about the company. Say what the piece is, how it is built, and what that does for the horse or the rider.
 
 ## Writing rules
 
 - Never use an em dash.
 - Use commas, colons, parentheses, or separate sentences instead.
 - Use sentence case for headings, controls, labels, and card metadata.
+- Product and range names are the exception: write them in title case, as in "Soft Crown Bridle" and "Leather Saddlery".
 - Prefer active voice.
 - Keep paragraphs focused on one idea.
-- Vary sentence length, but remove filler.
-- Use contractions when they make the sentence more natural.
-- Write byroose in lowercase unless it begins a system-defined field that cannot preserve the brand styling.
-- Use AI-assisted, not AI powered, when accuracy requires human involvement to remain clear.
-- Avoid exclamation marks unless the moment genuinely needs one.
-- Avoid vague superlatives such as best, revolutionary, world-class, and game-changing unless evidence supports the claim.
-- Do not imitate competitor copy.
+- Use British spelling: colour, fibre, customise.
+- Avoid exclamation marks.
+- Avoid vague superlatives such as best, finest, world-class, and premium unless evidence supports the claim.
+- Do not state a specification, a minimum order, a lead time, a certification, an award, a market, or a year of founding until the house has confirmed it.
 - Do not publish placeholder statistics, clients, testimonials, credentials, or results as factual.
+- Do not copy product descriptions from another manufacturer or retailer.
 
 ## Preferred language
 
 Prefer:
 
-- Clear strategy
-- Distinctive creative work
-- Useful content
-- Measurable outcomes
-- Connected services
-- Built for the audience
-- Designed to convert
-- Evidence from real work
+- Cut, stitched, and finished
+- Made to your specification
+- Checked against the approved sample
+- Shaped around the horse
+- Built for daily use
 
 Avoid:
 
-- We leverage cutting-edge solutions
-- Unlock your potential
-- Seamless end-to-end synergy
-- Disrupt the industry
+- We leverage cutting-edge technology
 - One-stop shop
-- Results-driven excellence
+- Unmatched quality
+- State of the art
 - Generic claims with no supporting detail
 
 ## SEO workflow
@@ -132,57 +118,38 @@ Target title length is usually 50 to 60 characters. Target meta description leng
 
 Link text should describe the destination or action. Prefer:
 
-- View the case study
-- Explore AI content creation
-- Read the launch guide
-- Get a project plan
+- View the collection
+- View product
+- See how we craft
+- Request a quote
 
 Avoid click here, learn more, read more, and other context-free labels when a specific label fits.
 
 Use one primary action per section. Secondary actions should support the same user goal rather than compete with it.
 
-## Service pages
+## Product pages
 
-A service page should explain:
+A product page should state:
 
-- Who the service is for
-- The problem it addresses
-- What byroose does
-- What the engagement may include
-- How the process works
-- What outcomes can reasonably be expected
-- Relevant proof
-- The next step
+- What the product is and what it is for
+- How it is built: materials, lining, fittings, and fastenings
+- What can be specified: sizes, colours, materials, and hardware, once confirmed
+- One clear next step: enquire about this product
 
-Do not promise a result that depends on market conditions, advertising spend, platform algorithms, or client execution.
+Keep the summary to one sentence, because cards and metadata reuse it. Keep features to short noun phrases. Write the image alternative text as a plain description of what the photograph shows.
 
-## Case studies
+## Range pages
 
-Use a clear evidence structure:
+A range page should say what the range covers and who it is for in two or three sentences, then let the products speak. Use the range description from the catalogue rather than writing a second version.
 
-1. Client context
-2. Business challenge
-3. Insight and strategy
-4. Work delivered
-5. Measured result
-6. What the result means
+## Craft and process copy
 
-Label estimates and time ranges. Confirm metrics, dates, client names, and approval before publication.
-
-## Articles and learning content
-
-- Answer the main question early.
-- Add original experience, examples, frameworks, or data.
-- Use short sections and descriptive subheadings.
-- Link to relevant services and related articles where useful.
-- Add author, publish date, and update date only when accurate.
-- Update or remove stale claims.
-- Do not generate thin pages only to target keyword variations.
+Describe the process in the order it happens. Name real steps and real checks. Do not claim a machine, a capacity, a workforce, or a standard the house has not confirmed.
 
 ## Metadata and structured data
 
 - Keep metadata unique and aligned with visible content.
-- Do not list services, locations, awards, ratings, or prices that the page does not support.
+- Do not list products, locations, awards, ratings, or prices that the page does not support.
 - Add structured data only for content that is present and eligible.
 - Keep canonical URLs intentional.
 - Use meaningful social sharing titles and descriptions.
@@ -190,14 +157,13 @@ Label estimates and time ranges. Confirm metrics, dates, client names, and appro
 
 ## AI-assisted writing
 
-AI can help with research, outlines, alternatives, editing, and quality checks. A human or responsible agent must still:
+AI can help with outlines, alternatives, editing, and quality checks. A human or responsible agent must still:
 
-- Verify every factual claim
+- Verify every factual claim with the house
 - Remove invented detail
-- Match the byroose voice
-- Replace generic filler with specific value
-- Check links and names
-- Confirm permissions for client material
+- Match the voice above
+- Replace generic filler with specific detail about the product
+- Check names and links
 - Review the final text in page context
 
 Do not publish raw generated copy.
@@ -206,11 +172,10 @@ Do not publish raw generated copy.
 
 - Is the intended reader clear?
 - Does the page answer one primary intent?
-- Is the value specific?
-- Are claims accurate and supportable?
+- Is the detail specific and confirmed?
 - Is there exactly one H1?
 - Do headings create a useful outline?
 - Are links descriptive?
 - Is the next action clear?
 - Is the text free of em dashes?
-- Is the copy concise, natural, and consistent with the brand?
+- Does the brand name come from app/lib/site.ts?

@@ -1,4 +1,4 @@
-# byroose design system
+# XYZ Tannery design system
 
 The design system keeps the original landing-page character while following
 Shadcn Vue and Tailwind CSS v4 conventions. Components own behavior and variants;
@@ -7,8 +7,8 @@ owns semantic tokens, base behavior, and cross-component Tailwind utilities.
 
 ## Principles
 
-- Preserve the bold editorial character of the original landing concept.
-- Use a small number of strong colors with generous neutral space.
+- Keep the bold editorial layout and give it a heritage, hand-made character.
+- Use a small number of deep, quiet colors with generous ivory space.
 - Keep typography direct, oversized, and easy to scan.
 - Make touch, focus, and responsive behavior part of every component contract.
 - Prefer semantic tokens and named variants over isolated visual values.
@@ -20,80 +20,59 @@ owns semantic tokens, base behavior, and cross-component Tailwind utilities.
 Theme values live in `app/assets/css/tailwind.css` as OKLCH variables. Shadcn's
 standard surface pairs (`background`/`foreground`, `card`/`card-foreground`,
 `primary`/`primary-foreground`, and so on) are the default API. Brand extensions
-cover blue, green, butter yellow, violet, pink, cream, soft copy, and subtle copy.
+cover navy, forest, gold, cognac, tan, cream, soft copy, and subtle copy.
 
 Use semantic utilities such as `bg-primary`, `text-muted-foreground`, and
 `border-border`. Do not add raw hexadecimal colors to Vue templates. New theme
 tokens belong in `:root` and `.dark`, then must be exposed through `@theme inline`.
 
-The light theme is the current product baseline. Dark theme values already exist
-and must remain valid when tokens change, but dark-mode launch requires a complete
-visual and accessibility review.
+The light theme is the current product baseline. Dark theme values exist and
+must remain valid when tokens change, but dark-mode launch requires a complete
+visual and accessibility review. The matted product imagery multiplies into a
+light surface, so it needs its own dark treatment before that launch.
 
 ### Current palette
 
+The palette is the heritage light theme: an ivory canvas, espresso ink, an
+oxblood primary, and deep jewel tones with gold and tan accents.
+
 | Token | Visual role | Intended use |
 | --- | --- | --- |
-| `background` | Neutral off-white, `#FCFCFC` | Main page canvas |
-| `brand-cream` | Warm cream, `#F5EBDD` | Cream brand surfaces |
-| `foreground` | Near-black ink | Primary text and dark surfaces |
-| `card` | White | Elevated and contained content |
-| `panel` | Soft sand, `#F5E8D4` | Large panels that sit on the canvas, such as the blog section |
-| `paper` | Light cream, `#F5EEDE` | The site footer and the first working-process card |
-| `canvas-shade` | Neutral grey, `oklch(0.955 0 0)` | A grey band one step below the canvas, such as the About team section |
-| `primary` and `ring` | Orange-red, `#FF3C00` | Primary actions, emphasis, and high-energy sections |
-| `secondary` | Cobalt blue | Alternate brand surfaces and supporting emphasis |
-| `brand-green` | Saturated green, `#0B9E5A` | Positive editorial surfaces and varied content cards |
-| `brand-yellow` | Butter yellow, `#F8E5AA` | Warm editorial surfaces and selective highlights |
-| `brand-violet` | Vivid violet, `#7C3AED` | Expressive editorial surfaces and selective highlights |
-| `accent` and `brand-pink` | Soft pink | Playful highlights and alternate surfaces |
-| `muted` | Pale warm neutral, `#EEE3D5` | Quiet backgrounds and placeholders |
+| `background` | Ivory, `oklch(0.975 0.008 85)` | Main page canvas |
+| `foreground` | Espresso ink, `oklch(0.2 0.02 50)` | Primary text and dark surfaces |
+| `card` | Warm white | Elevated and contained content, form fields |
+| `panel` | Parchment sand | Large panels that sit on the canvas, such as the featured products panel |
+| `paper` | Light parchment | The footer, the first process card, the enquiry form, and every image mat |
+| `canvas-shade` | Warm grey one step below the canvas | Page sheets that rise over a page hero |
+| `primary` | Oxblood, `oklch(0.38 0.11 22)` | Primary actions, emphasis, and text selection |
+| `secondary` and `brand-navy` | Midnight navy | Alternate deep surface |
+| `brand-forest` | Racing green | Alternate deep surface |
+| `brand-gold` | Antique gold | Highlights and a light accent surface |
+| `brand-cognac` | Cognac | Selective highlight |
+| `accent` and `brand-tan` | Saddle tan | Warm light surface and ghost hover |
+| `brand-cream` | Cream | Cream brand surfaces and soft icon tiles |
+| `muted` | Pale warm neutral | Quiet backgrounds and placeholders |
 | `brand-soft` | Mid neutral | Secondary labels and low-emphasis copy |
 | `brand-subtle` | Dark neutral | Editorial body copy below primary emphasis |
-| `ribbon` | Fresh green, `oklch(0.82 0.16 135)` | The decorative Studio ribbon stroke |
-| `ribbon-shade` | Deeper green, `oklch(0.66 0.15 142)` | The ribbon's shading where it passes under itself |
-| `ribbon-foreground` | Near-black ink | Text on a `ribbon` surface, such as the About call to action |
-| `destructive` | Alert red | Destructive and error actions only |
-| `border`, `input`, and `ring` | Semantic controls | Boundaries, fields, and focus indicators |
+| `ribbon` | Gold, `oklch(0.8 0.115 85)` | The decorative ribbon, read as a line of stitching, and the enquiry call to action surface |
+| `ribbon-shade` | Bronze | The ribbon's shading where it passes under itself |
+| `ring` | Brass, `oklch(0.62 0.13 58)` | Focus indicators |
+| `destructive` | Alert red | Destructive and error states only |
 
-`brand-blue` and `brand-pink` are explicit brand aliases. Generic components
-should prefer `secondary` and `accent`. Brand aliases are appropriate when the
-color itself is part of a byroose composition. `brand-cream` no longer matches
-the canvas, so use it only when a surface must read as cream.
+Oxblood, navy, forest, and cognac surfaces use the ivory
+`primary-foreground`. Gold, tan, cream, and ribbon surfaces use the espresso
+ink. Keep each color paired with its foreground token. Every text pair above
+meets WCAG AA at 4.5:1 or better: the tightest are `brand-soft` on `muted` at
+about 4.7:1 and ivory on `brand-cognac` at about 6:1.
 
-Orange, blue, green, and violet surfaces use white foregrounds. Yellow and pink
-surfaces use dark ink foregrounds. Copied labels over dark rollover surfaces use
-`primary-foreground`. Keep each brand color paired with its foreground token so
-color behavior remains consistent in both themes. Text selection uses the same
-pair, white `primary-foreground` on the orange `primary`, through the global
-`::selection` rule.
+The focus `ring` is a brass tone chosen to clear 3:1 against the ivory canvas,
+`paper`, and the espresso ink. It sits just under 3:1 on an oxblood surface, so
+give a focusable control on oxblood an offset ring that lands on the
+surrounding surface.
 
-The light canvas is a neutral off-white, about `#FCFCFC` or
-`oklch(0.99 0 0)`, and the creams sit on it as distinct surfaces. Do not set
-the canvas to pure white. Every warm surface steps clearly below the
-canvas, so none of them reads as the page itself. `paper`, at
-`oklch(0.95 0.022 84)`, is a light cream for the footer and the first
-working-process card. Keep `background` and `paper` visibly different whenever
-either changes. `brand-cream` sits at nearly the same value,
-`oklch(0.9441 0.0215 76.53)`, so do not place a `brand-cream` surface on
-`paper`. `muted` sits a step darker and slightly toward yellow at
-`oklch(0.9208 0.0221 73.14)`, so quiet surfaces stay visible on the canvas.
-`panel` is a soft sand between `brand-cream` and `muted` at
-`oklch(0.935 0.03 79)`, so the blog panel reads as a deliberate block of
-color. It pairs with the ink `panel-foreground`, and in the dark theme both
-match the dark `card` pair. The dark theme uses the cream, `oklch(0.9441 0.0215 76.53)`, for
-its foreground, card, popover, accent, and cream foreground tokens. Change
-`brand-cream`, `muted`, and those dark foregrounds together, then recheck
-`muted-foreground`, `brand-soft`, and `brand-subtle` against the canvas and
-`muted`, and recheck them against `panel` and `paper` when those change.
-`brand-soft` on `muted` is the tightest pair at about 4.75:1.
-
-`canvas-shade` is neutral rather than warm, so it reads as a grey version of
-the canvas instead of another cream. It pairs with the ink
-`canvas-shade-foreground`, and in the dark theme it sits one step above the dark
-canvas with the cream foreground. `ribbon` doubles as a surface on the About
-call to action. Its `ribbon-foreground` is the ink in the light theme and the
-cream in the dark theme, where the ribbon itself turns a deeper green.
+`surfaceTones` in `app/lib/surfaces.ts` is the single map from a tone name
+(`primary`, `navy`, `forest`, `gold`, `tan`, `card`, `dark`) to its
+`surface-*` utility. Components take a tone name, never a color class.
 
 ### Adding colors
 
@@ -112,33 +91,39 @@ semantic palette over many near-duplicate colors.
 
 ## Typography
 
-Switzer is the primary font. Nuxt Fonts loads it from the Fontshare provider in
-weights 400 to 800, then downloads and self-hosts the files, so the site never
-requests fonts from a third party at runtime. Do not add font link tags or
-component-level font imports.
+Two families carry the site. Boska, a high-contrast display serif, sets
+headings through `font-heading`. Switzer sets body copy, labels, and controls
+through `font-sans`. Nuxt Fonts loads both from the Fontshare provider, then
+downloads and self-hosts the files, so the site never requests fonts from a
+third party at runtime. Do not add font link tags or component-level font
+imports.
 
-Switzer's descenders reach `0.24em` below the baseline and its ascenders `0.74em`
-above it. Text set tighter than about `1.2` leading therefore overflows its line
-box, and a word or line mask needs roughly `(1.21 - leading) / 2` em of bottom
-padding, cancelled by an equal negative margin, to keep descenders visible. Keep
-that padding below the reveal's starting offset so a waiting word does not peek
-through the extra space. Recheck every mask and every measured wrap when the font
-changes.
+The base layer applies `font-heading` to `h1` through `h4`, and
+`section-title` carries it for display text that is not a heading, such as the
+footer slogan. Large editorial statements (`studio-statement` and
+`EditorialStatement`) use the serif at medium weight. A control inside a serif
+block, such as the footer action, sets `font-sans` explicitly.
+
+Boska is loaded at 400, 500, and 700, with italics. A heading class that asks
+for 600 or 800 resolves to the 700 face. The serif needs looser tracking than
+the sans it replaced: display headings use `-0.025em` to `-0.03em`, never the
+`-0.045em` to `-0.05em` a grotesque can carry.
+
+Line masks around display text need padding for ascenders and descenders,
+cancelled by an equal negative margin. Recheck every mask and every measured
+wrap when a font or a leading value changes.
 
 - `text-hero` is reserved for the primary landing statement. It sets
   `clamp(2.875rem, 8.8vw, 9.5rem)`, about 127px at 1440 wide. See Home hero
   layout for how the hero title uses it.
 - `text-section` is the default major section heading.
-- `text-statement` supports large editorial body statements.
-- `text-service` sets the service panel titles at
-  `clamp(3.25rem, 8.5vw, 10rem)`, about 122px at 1440 wide, where the longest
-  name still holds one line. Its leading of `1.08` leaves room for the
-  descender of "Development". The titles are plain headings without a reveal
-  or a mask.
-- `text-step` sets the journey step card titles at
+- `text-statement` supports large editorial statements.
+- `text-service` sets the craft panel titles at
+  `clamp(3.25rem, 8.5vw, 10rem)`. Keep each title short enough to hold one
+  line at that size.
+- `text-step` sets the process step card titles at
   `clamp(4rem, 9vw, 9rem)` with a leading of `0.85`, capped by the card
-  column's width. The journey section
-  title has no size token, because it fits its container. See Journey section.
+  column's width.
 - Standard Tailwind sizes cover body copy, labels, metadata, and controls.
 
 Use sentence case for small interface text and card metadata. Do not use expanded
@@ -146,9 +131,52 @@ uppercase styling for these elements. Eyebrows are not part of the interface
 hierarchy. Promote a meaningful section label to a semantic heading, or remove a
 decorative label when it does not add useful structure.
 
-Use tight tracking only for large display text. Body copy should use comfortable
-line height and a readable measure. Do not choose heading elements by visual size;
-preserve semantic heading order and apply visual tokens separately.
+Body copy should use comfortable line height and a readable measure. Do not
+choose heading elements by visual size; preserve semantic heading order and
+apply visual tokens separately.
+
+## Product imagery
+
+Product photographs arrive in mixed sizes, ratios, and backgrounds. The mat
+treatment makes them read as one catalogue.
+
+- `media-mat` paints the `paper` surface. `media-mat-image` sets
+  `object-contain` and multiplies the image into that surface, so a white
+  studio background becomes the parchment itself.
+- The mat background must sit in the same stacking context as the image. A
+  transformed wrapper isolates blending, so when a wrapper is animated, put
+  `media-mat` on that wrapper rather than on an ancestor. `MediaFrame` does
+  this for its parallax layer when `mat` is set.
+- Each catalogue image carries a `fit`. `contain` is the default and uses the
+  mat. `cover` is for lifestyle photographs that should fill their frame.
+- `ProductCard` uses a fixed `4/5` mat. `MediaPlaceholder` stands in when a
+  product has no photograph and labels the slot.
+- Any new `sizes` value must use widths listed in `image.screens`, because
+  that list is the image optimizer's allowlist.
+
+## Page building blocks
+
+Routes other than home are composed from shared blocks.
+
+- `PageHero` is the centered title and description that opens a page. Its
+  `compact` size suits listing and policy pages, and `trailImages` enables the
+  cursor image trail. `usePageHeroMotion` reveals it at the page transition's
+  reveal point and drifts it away as the page scrolls.
+- `page-sheet` is the rounded `canvas-shade` block that rises over a hero.
+  Everything between a `PageHero` and the closing call to action sits inside
+  one sheet so the hero never shows through.
+- `LineTitle`, `LineTitleMedia`, `EditorialStatement`, and `MediaFrame`
+  carry section titles, cycling title imagery, large statements, and framed
+  media. One `useSectionRevealMotion` scope reveals one `LineTitle`, its
+  media frames, and its `data-section-rise-group` items.
+- `ProductGridSection` pairs a heading and an optional action with a grid of
+  `ProductCard` components and owns their reveal through
+  `useProductGridMotion`.
+- `EnquiryCta` is the gold closing call to action that links to the enquiry
+  route.
+- The enquiry form uses the source-owned `Input`, `Textarea`, and `Label`
+  primitives. Fields sit on a `paper` panel, report errors through
+  `aria-invalid` and `aria-describedby`, and never rely on color alone.
 
 ## Spacing and layout
 
@@ -232,7 +260,7 @@ second time. Cross-component recipes live under the global `@layer components`.
 Examples include `section-title`, `section-gutter`, `split-title`, and the
 shared tilt behavior.
 Small reusable surface and media recipes use Tailwind v4 `@utility`, such as
-`surface-blue` and `pattern-orange`.
+`surface-navy` and `media-mat`.
 
 Use direct Tailwind utilities in templates for one-off layout adjustments of a
 few classes. When the same recipe appears twice, give it a semantic class group
@@ -326,7 +354,7 @@ fills it with the `ribbon` green and the `yellow` variant with butter yellow.
 
 The `light`, `dark`, and `soft` tones render a filled tile, `size-11` or
 `size-9` at `sm`, that clips its own overflow, for icons outside a button, such
-as the course card link.
+as a card link.
 
 Icon names that express a repeated meaning belong in `app/lib/icons.ts`. A
 one-time decorative icon may use a direct Lucide collection name when a semantic
@@ -368,7 +396,7 @@ directions with `gsap.set`, so the notice still appears and still dismisses
 without travelling.
 
 Accepting writes `accepted` and declining writes `declined` to the
-`byroose-cookie-consent` cookie for one year. Any future tracking must check for
+`xyz-tannery-cookie-consent` cookie for one year. Any future tracking must check for
 `accepted` before it runs. Because the value is read through `useCookie`, the
 server already knows whether to render the notice, so an answered banner never
 flashes during hydration.
@@ -384,7 +412,7 @@ canvas color. The gradient lives on the footer root rather than the moving
 content wrapper, so it stays fixed while the content travels during the
 reveal. The footer is not a dark
 surface, so it carries no
-`data-header-surface` marker. The landing page no longer ends with an orange
+`data-header-surface` marker. The landing page no longer ends with an oxblood
 call to action section, and the footer follows the FAQ directly.
 
 From `lg` the top row is a two-column grid. The left column stacks the slogan
@@ -396,7 +424,7 @@ left column. Its link grid drops to two columns below `sm`.
 The title uses `section-title` on two block lines, "From seen" and "to chosen".
 "seen" and "chosen" each carry a static `WaveUnderline` just below the word, as
 wide as the word, with `animated` off so the lines are always present. The
-"seen" line is the `ribbon` green, and the "chosen" line is brand orange
+"care" line is the `ribbon` gold, and the "last" line is the oxblood
 `primary`. A transparent right-arrow glyph and a
 `cta-lg` "Book a Call" action to `/contact` fill the third row to the `4.52em`
 width of "From seen", with `0.45em` of space above it, which keeps the action
@@ -412,24 +440,24 @@ are all in `em`, so the button scales with the title.
 
 Below the title, a semibold `muted-foreground` "Or write directly to" label at
 `text-base`, `text-lg` from `md`, with `-0.03em` tracking sits tightly above the
-`info@byroose.com` mail link.
+`info@the XYZ Tannery site` mail link.
 The lead column uses the larger `gap-16`, `gap-20` from `md`, rhythm.
 
 Column titles are bold `h2` labels in the ink `paper-foreground` at `text-xl`,
 `text-2xl` from `md`, with no uppercase and no border. Every footer link, including the email, the
 column links, and the credit, is a `SiteNavLink`, so it shares the header
-navigation's hover: the label scales away while its orange copy scales up and
+navigation's hover: the label scales away while its oxblood copy scales up and
 the underline draws from the center. The email, the column links, and the
 location share `site-footer-item-text`: semibold at `text-xl`, `text-2xl` from
 `md`, with `leading-tight` and `-0.03em` tracking. The links use the `inherit`
 size so they take it, and list items sit only `0.125rem` apart. Navigation lists
-Home, About, Works, Services, Blog, and Contact. Social Media lists X, LinkedIn, and
-Instagram, which point to `#` until the real profile URLs exist. Located in
+Home, Collections, Craft, About, Awards, and Contact. Collections lists the four
+product ranges from the catalogue. Located in
 shows "Yerevan, Armenia", a live local time with "GMT +4", then Terms &
 Conditions and Privacy Policy after a larger gap.
 
 The right column ends with "Website by Razo Codes", "© 2026 All Rights
-Reserved", and "byroose inc." as three separate lines that share the email
+Reserved", and "XYZ Tannery inc." as three separate lines that share the email
 address typography. "Razo Codes" is a `SiteNavLink` at its `inherit` size and
 opens the author's LinkedIn profile in a new tab. A "Back to Top" button sits on
 the right of the credits, aligned with their last line, in the same item
@@ -960,7 +988,7 @@ the photo, the copy, and the work title therefore all paint above it, and the
 landing wrapper's horizontal clip hides it past the viewport edges. Do not
 give the Studio section a `z-index`, `isolation`, or a background, because any
 of them would hide the ribbon or lift it above the content. The header logo
-blends with `difference`, so it reads violet while it passes over the green.
+blends with `difference`, so it reads as its complement while it passes over the gold.
 
 The stroke uses the `ribbon` token at `clamp(4.5rem, 13vw, 15rem)` with round
 caps and joins. The shape comes from a hand-drawn SVG path. `ribbonArtwork` in
@@ -1100,7 +1128,7 @@ with `mt-10`. Each value is an extrabold inline highlight at `text-5xl`,
 `text-6xl` from `md`, with `leading-none` and `-0.05em` tracking, that takes a
 `surface-*` utility through the card's `tone` prop, so a case study picks a
 brand color from `app/lib/surfaces.ts` rather than defining one. The highlight
-keeps a surface behind the number because yellow and pink would not be
+keeps a surface behind the number because gold and tan would not be
 readable as text on the canvas. The label below it is `font-semibold`
 `foreground` text at `text-lg`, `text-xl` from `md`, with `1.05` leading, held
 to `14ch` so it wraps into a short stack under its number. Its `0.1em` of
@@ -1354,7 +1382,7 @@ The intro panel centers its heading, currently "What can we do for You?", on two
 lines at `clamp(3rem, 10vw, 12rem)`, with each line held to one line through
 `white-space: nowrap`. Each line is its own `SplitText` word split, and the
 closing "You?" is a separate split so it can carry a `WaveUnderline` in the
-brand orange `primary` color directly below it. Screen readers get the phrase from an
+oxblood `primary` color directly below it. Screen readers get the phrase from an
 `sr-only` copy. Every word starts invisible,
 blurred, and small, at `0` opacity, `blur(16px)`, and `0.6` scale, and
 grows to full opacity, no blur, and its resting size. The words resolve one
@@ -1367,8 +1395,8 @@ Each service panel stacks its title at `text-service`, a description below
 it, and an image below that. The panels use a narrower gutter than the
 site-wide `section-gutter`, `clamp(1rem, 2vw, 1.5rem)` instead of
 `spacing-page`, so the title, the description, and the image reach closer to
-the viewport edges. The service names, "AI Content Creation" and
-"Website Development", are set in title case. The intro title is not
+the viewport edges. The panel names, "Leather Saddlery" and
+"Rugs & Textiles", are set in title case. The intro title is not
 selectable, so a drag across the pinned panel never highlights its words.
 
 The title is left-aligned and starts at the left content edge. The description
@@ -1573,7 +1601,7 @@ column's right edge and to the bottom of the row. The label shares the title's
 weight and tracking at `0.75` of its size, through the card's
 `--journey-step-display` and `--journey-step-label` variables. It is a dimmed
 copy of the card's own text color, `text-current/25` on the paper card and
-`text-current/40` on the blue and orange cards, so it reads as a quieter
+`text-current/40` on the forest and oxblood cards, so it reads as a quieter
 companion to the title rather than a second black heading. The second row pairs
 the description on the left with the image on the right. The rows sit
 `--journey-step-row-gap` apart: `2rem` below `md`, `3rem` from `md`, and `4rem`
@@ -1587,12 +1615,12 @@ Each card ends its text column with a `cta-lg` call to action under the
 description, `gap-8` below it, `gap-10` from `md`, and `gap-14` from `xl`, that
 routes to `/services`. Every step has its own label, set through the step's `action`
 field: "Explore the diagnosis", "See what we build", and "See how we scale".
-The light cream `paper` card uses the `dark` variant, and the blue and orange cards use
+The light cream `paper` card uses the `dark` variant, and the forest and oxblood cards use
 `light`, a white `bg-card` button with `card-foreground` text, so the action
 reads as a clean white pill on the saturated surface rather than the beige
-`cream`. The orange card's light action overrides its rollover tones to
+`cream`. The oxblood card's light action overrides its rollover tones to
 `blue`, `green`, and `dark`, because the variant's final `primary` tone would
-match the orange card.
+match the oxblood card.
 
 The description is set at `text-xl`, `text-2xl` from `sm`, and `text-3xl` from
 `xl`, with a `1.05` leading, `-0.045em` tracking, `font-medium`, and a `32ch`
@@ -1649,24 +1677,24 @@ the end.
 Reduced motion shows the title and every card at rest, without the reveals and
 without the pin, so the cards simply follow one another.
 
-### Blog section
+### Featured products section
 
-The blog section is a warm sand panel on the canvas. The section takes the
+The featured products section is a warm sand panel on the canvas. The section takes the
 journey slide inset, `clamp(1rem, 2vw, 1.5rem)`, on both sides and
 `spacing-section` below it before the FAQ. Inside, a `bg-panel` panel with
 `text-panel-foreground` and
 `rounded-2xl` corners holds the `section-gutter` and `py-16`, `py-20` from
-`md`, and `py-24` from `xl`. The heading row pairs the "More Than a Blog" title,
+`md`, and `py-24` from `xl`. The heading row pairs the "From the workshop" title,
 set in title case at the user's request, with a `dark` `cta-lg` "All articles"
-action that routes to `/blog`, aligned to the row's bottom edge. The row wraps,
+action that routes to `/collections`, aligned to the row's bottom edge. The row wraps,
 so on phones the action sits below the title. The title keeps `section-title`
 for its weight and tracking but sets its own size,
 `clamp(2.75rem, 9vw, 9rem)`, about 130px at 1440 wide, larger than
 `text-section`, at `0.92` leading.
 
-Three `BlogCard`s follow in one column below `md` and three columns from `md`.
+Three `ProductCard`s follow in one column below `md` and three columns from `md`.
 Each card is a `NuxtLink` painted with a `surface-*` utility through its
-`tone` prop, which accepts `pink`, `yellow`, and `green`, used in that order.
+`tone` prop, which accepts `card`, `tan`, `gold`, and `forest`. The featured row uses `tan`, `gold`, and `forest` in that order, and product grids use `card`.
 The card is `rounded-2xl` with `p-3`, so its `rounded-xl` image sits inset in
 the tint. It carries a soft `shadow-xl` in `foreground` at 10 percent, at the
 user's request, so the tinted cards lift off the sand panel. This is a
@@ -1683,15 +1711,15 @@ surface. The date is a `time` element whose label comes from
 is `text-xs` from `md` until `xl`, which keeps the date beside the pill from
 1024 wide. On narrower three-column cards the date wraps below the pill.
 
-`useBlogMotion` reveals the section. When the heading row reaches 82 percent of
+`useProductGridMotion` reveals the section. When the heading row reaches 82 percent of
 the viewport, the title words rise from their `SplitText` word masks with the
 shared word reveal, `0.8s` on `power3.out`, but with a wider `0.12s` stagger
 than the shared `0.03s`, because a four word title would otherwise read as one
 movement. The word
 masks carry `0.15em` of block padding cancelled by an equal negative margin for
 the tight leading. The action follows one stagger step after the last word,
-rising the same way as the journey call to action: its `data-blog-cta-mask`
-wrapper is clipped to `inset(0)` while the inner `data-blog-cta` block rises
+rising the same way as the journey call to action: its `data-product-grid-cta-mask`
+wrapper is clipped to `inset(0)` while the inner `data-product-grid-cta` block rises
 from `115` percent, and both the clip and the transform are cleared at the end
 so the focus ring and the rollover are never cut.
 
@@ -1733,7 +1761,7 @@ keyboard focus shows the same state, and reduced motion switches between the
 two states without the transition.
 
 The articles, dates, and images are placeholders until real posts exist, and
-every card links to `/blog`.
+every card links to its product page.
 
 ### FAQ section
 
@@ -1788,9 +1816,9 @@ site footer.
 The hero fills the first screen below the header except for
 `--about-hero-peek`, `clamp(3rem, 9svh, 6rem)`, so the rounded top of the team
 section shows at the bottom of the first screen. It centers the "Welcome to"
-and "byroose" title above a three line description, `5rem` below the title and
+and "XYZ Tannery" title above a three line description, `5rem` below the title and
 `7rem` from `md`, which keeps the descender of the y clear. The title and the call
-to action title use `AboutTitle` at its `display` size,
+to action title use `LineTitle` at its `display` size,
 `clamp(3.5rem, 11vw, 12rem)`. The section titles use its `section` size,
 `clamp(2.75rem, 8vw, 8.5rem)`. Every title is bold with `-0.05em` tracking and
 `0.88` leading, and each explicit line sits in a mask with `0.2em` of block
@@ -1825,7 +1853,7 @@ absent on touch devices and under reduced motion.
 
 The team section paints the `canvas-shade` grey with
 `clamp(1.5rem, 3vw, 3rem)` top corners at `z-10`, so it slides over the hero.
-"Who stands behind byroose" sits on the left with a primary orange wave under
+"Who stands behind XYZ Tannery" sits on the left with a primary oxblood wave under
 "behind". Two 5:6 portraits with a name and a role follow: Ruzan Darbinyan,
 Founder & Creative Director, on the right, and Razmik Matinyan, Co-Founder &
 Senior Web Developer, on the left, pulled up by `0.45` of the portrait width
@@ -1857,19 +1885,19 @@ covered or focus state, and Tab reaches it first. Escape, the overlay, and the
 close action all close the dialog, and focus returns to the card action. The
 bios are working copy to be replaced.
 
-The trust and brands sections share `AboutSectionHeading`: the title on the
+The trust and brands sections share `LineTitleMedia`: the title on the
 left and a 5:6 `ImageCycle` frame on the right, centered on the title from
 `md`, that cuts through four images from `public/images/work` every `750ms`, as
 the More works panel does. "trust" carries a `ribbon` green wave and "choose" a
-primary orange one. Each wave draws once its title has risen. Below each
+primary oxblood one. Each wave draws once its title has risen. Below each
 heading a statement takes the right two thirds of the row from `md`. The
-statements use `AboutStatement`, which owns that placement, semibold at `text-2xl`,
+statements use `EditorialStatement`, which owns that placement, semibold at `text-2xl`,
 `text-4xl` from `md`, and `text-5xl` from `xl`, with `0.95` leading and
 `-0.04em` tracking, and they rise line by line with the services description
 timing, `1.5s`, `power3`, and a `0.1s` stagger.
 
 The call to action is a `ribbon` green section with the same rounded top corners,
-a full `100svh` tall, centering "Become chosen byroose" above a `dark` `cta-lg` "Start
+a full `100svh` tall, centering "Become chosen XYZ Tannery" above a `dark` `cta-lg` "Start
 Now" action with an arrow right glyph that routes to `/contact`. The action
 scales its label, padding, and glyph in `em` from
 `clamp(1.25rem, 2.2vw, 2rem)` and rises from a mask that clips only during the
@@ -1908,7 +1936,7 @@ the direction it should animate, paste its `d` string into the matching
 artwork, and remeasure the section lines if the layout has changed.
 
 Every frame on the page reveals with the Studio portrait's bottom-up clip and
-carries the shared image parallax on its `data-about-media-layer`. Every scroll
+carries the shared image parallax on its `data-media-frame-layer`. Every scroll
 reveal starts at `82` percent of the viewport and runs once. Reduced motion
 shows every title, line, image, and underline at rest, without the hero drift,
 the cursor trail, or image cycling, and shows both drawn lines complete. Below
@@ -1967,13 +1995,13 @@ because then the reveal is not driven by scrolling. Reduced motion has no
 footer reveal, so the actions and the logo never fade.
 
 The primary navigation is plain text: no surface, padding, or shadow on the
-`nav` or its links. It lists Home, Works, Services, About, Blog, and Contact.
+`nav` or its links. It lists Home, Collections, Craft, About, Awards, and Contact, read from `site.navItems`.
 Each `SiteNavLink` sets its label in semibold at `text-lg`, in the title case
 of the nav labels rather than uppercase, and stacks a hidden copy in the same
 grid cell. Its `size` prop defaults to `lg`. The `inherit` size drops the
 size and weight so the link takes them from its surrounding text, as the
-footer credit does. The copy and the underline are brand orange, `primary`, so hovering
-swaps the ink label for an orange one. The header's Start a project action
+footer credit does. The copy and the underline are oxblood, `primary`, so hovering
+swaps the ink label for an oxblood one. The header's Request a quote action
 and the menu control drop uppercase too. On hover or visible keyboard focus,
 `useNavLinkMotion` scales the label to zero toward its top center while the copy scales up from zero at its
 bottom center, and a one-pixel underline below the label draws outward from its
@@ -2013,7 +2041,7 @@ repeating the current navigation. Every other route follows the link.
 The header logo reads on every surface through `mix-blend-mode: difference`.
 It is painted in the `background` token, so it shows as black on the canvas and
 as off-white over dark blocks, the way the dark services panel text does. Saturated
-surfaces invert it to their complement, so it reads cyan over orange. A sticky header always forms its own stacking context, and a blended
+surfaces invert it to their complement, so it reads as the complement over oxblood. A sticky header always forms its own stacking context, and a blended
 element only mixes with what is painted inside that context, so the logo cannot
 live inside the `header`. `SiteHeader` therefore renders it as a second root,
 a fixed `site-logo-layer` that sits in the page's root stacking context at the
@@ -2181,13 +2209,13 @@ surface names:
 
 | Variant | Layer sequence |
 | --- | --- |
-| `default` | blue, green, dark |
-| `dark` | green, pink, primary |
-| `outline` | primary, green, dark |
-| `cream` | primary, green, dark |
-| `light` | blue, pink, primary |
-| `ribbon` | yellow, primary, dark |
-| `yellow` | green, primary, dark |
+| `default` | navy, forest, dark |
+| `dark` | forest, tan, primary |
+| `outline` | primary, forest, dark |
+| `cream` | primary, forest, dark |
+| `light` | navy, tan, primary |
+| `ribbon` | tan, primary, dark |
+| `gold` | forest, primary, dark |
 
 `destructive`, `secondary`, `ghost`, `link`, and `inverse` are absent from that
 map on purpose. They keep their plain color hover at every size and render no
@@ -2195,7 +2223,7 @@ rollover markup. A CTA-size button still bounces regardless of its variant.
 
 Tone names resolve through `app/lib/surfaces.ts` to the `surface-*` utilities,
 which pair a background with its readable foreground. `surface-dark` was added
-for the dark final layer, and `surface-yellow` completes the brand hues so
+for the dark final layer, and `surface-gold` completes the brand hues so
 butter yellow can be selected by tone name like every other brand color.
 Because the copied text is independent from the layer,
 the same module maps every surface tone to its semantic Tailwind foreground class.

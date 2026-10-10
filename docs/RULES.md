@@ -1,6 +1,6 @@
 # Project rules
 
-These are the mandatory engineering and content rules for byroose.com. They apply to human contributors, Codex, Claude Code, and other AI agents.
+These are the mandatory engineering and content rules for the XYZ Tannery site. They apply to human contributors, Codex, Claude Code, and other AI agents.
 
 ## Rule priority
 
@@ -156,7 +156,9 @@ Do not create a composable for a pure formatting function. Do not place DOM side
 - Keep one-off layout utilities in the template when the class list remains short and clear.
 - Move repeated visual recipes into a semantic class group under the appropriate Tailwind layer.
 - Use CVA for a component with meaningful variants, sizes, or states.
-- Keep source-owned Shadcn components generic. Put byroose-specific composition in cards, shared components, layouts, or feature components.
+- Keep source-owned Shadcn components generic. Put XYZ Tannery-specific composition in cards, shared components, layouts, or feature components.
+- Read the brand name, contact details, and navigation from app/lib/site.ts. Do not type the company name into a component.
+- Read products and ranges from app/lib/catalogue. Do not repeat product copy in a section.
 - Extend existing primitives instead of copying almost identical components.
 - Preserve dark-mode token pairs even when a feature launches in the light theme first.
 - Add or change tokens through the process in DESIGN_SYSTEM.md.
@@ -192,7 +194,7 @@ Do not create a composable for a pure formatting function. Do not place DOM side
 
 ## Backend rules
 
-The project has no application backend yet. When server features are added:
+The enquiry route is the first server feature. For it and for every later one:
 
 - Use Nuxt Nitro routes in server/api for HTTP endpoints.
 - Keep route handlers thin. Parse input, authenticate, authorize, call domain logic, and map the response.

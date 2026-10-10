@@ -1,6 +1,6 @@
 # Application architecture
 
-This document defines where code belongs, which layers may depend on each other, and how the architecture should grow. It describes the current application and marks future backend structure as planned rather than implemented.
+This document defines where code belongs, which layers may depend on each other, and how the architecture should grow.
 
 ## Architecture goals
 
@@ -16,93 +16,72 @@ This document defines where code belongs, which layers may depend on each other,
 ~~~text
 app/
   app.vue
-  assets/
-    css/
-      lenis.css
-      tailwind.css
+  error.vue
+  assets/css/         Theme tokens, base styles, shared utilities
   components/
-    about/
-    cards/
-    landing/
-    layout/
-    shared/
-    ui/
-  composables/
-    useAboutHeroMotion.ts
-    useAboutHeroTrail.ts
-    useAboutSectionMotion.ts
-    useArrowSwapHover.ts
-    useBlogMotion.ts
-    useCookieBannerMotion.ts
-    useDrawnLineMotion.ts
-    useFaqMotion.ts
-    useFitText.ts
-    useFooterMotion.ts
-    useHomeHeroScrollMotion.ts
-    useHomeIntroMotion.ts
-    useGsap.ts
-    useHeaderSurface.ts
-    useHoverBounce.ts
-    useHoverRollover.ts
-    useJourneyMotion.ts
-    useMenuLinkMotion.ts
-    useMoreWorksMotion.ts
-    useNavLinkMotion.ts
-    usePageTransition.ts
-    usePageTransitionMotion.ts
-    useServicesMotion.ts
-    useSiteHeaderMotion.ts
-    useSiteMenuMotion.ts
-    useSmoothScroll.ts
-    useStudioMotion.ts
-    useStudioRibbonMotion.ts
-    useTrailingTooltip.ts
-    useWorkLineMotion.ts
-    useWorkMotion.ts
+    about/            The house page sections
+    awards/           Awards page sections
+    cards/            CaseStudyCard, JourneyStepCard, ProductCard
+    collections/      Collections, range, and product pages
+    contact/          Enquiry form and contact page
+    craft/            Craft page sections
+    landing/          Home page sections
+    layout/           Header, menu, footer, wordmark, cookie notice, scrollbar
+    legal/            Policy page
+    shared/           Page hero, titles, media frames, statements, tooltips
+    ui/               Source-owned Shadcn Vue primitives
+  composables/        Motion, SEO, and integration composables
   lib/
-    about-line-path.ts
-    char-reveal.ts
-    drawn-line-path.ts
-    icons.ts
-    image-parallax.ts
-    ribbon-path.ts
-    split-text.ts
-    stack-reveal.ts
-    surfaces.ts
-    swap-timing.ts
-    utils.ts
-    word-reveal.ts
-    work-line-path.ts
-  layouts/
-    default.vue
+    catalogue/        Typed ranges, products, and lookup helpers
+    site.ts           Brand name, contact details, navigation, content status
+    structured-data.ts
+    ...               Motion recipes, artwork paths, icons, surfaces, utilities
+  layouts/default.vue
   pages/
-    about.vue
-    blog.vue
-    contact.vue
-    courses.vue
     index.vue
-    journey.vue
+    about.vue
+    awards.vue
+    contact.vue
+    craft.vue
     privacy.vue
-    services.vue
     terms.vue
-    works.vue
+    collections/
+      index.vue
+      [range]/index.vue
+      [range]/[product].vue
   plugins/
-    lenis.ts
-    page-transition.ts
-    ssr-width.ts
   router.options.ts
+server/
+  api/enquiry.post.ts
+  routes/robots.txt.ts
+  routes/sitemap.xml.ts
+  utils/
+shared/
+  schemas/enquiry.ts
 docs/
 public/
 nuxt.config.ts
-components.json
-package.json
 ~~~
 
 ## Layer responsibilities
 
 ### Application entry
 
-app/app.vue owns the root application shell and renders NuxtLayout around NuxtPage, which receives the page transition hooks from usePageTransitionMotion. app/layouts/default.vue owns the persistent site header, main landmark, footer, page transition shade, and cookie notice around every route. app/pages/index.vue owns the home route and composes the landing experience. app/pages/about.vue renders the About experience from app/components/about. The remaining page files own the Works, Services, Journey, Courses, Blog, Contact, Terms, and Privacy routes as focused route-level views. The Terms and Privacy routes are placeholders that the footer links to until the real policies exist. Keep app.vue focused on providers, NuxtLayout, and NuxtPage as routes are introduced.
+app/app.vue owns the root application shell and renders NuxtLayout around NuxtPage, which receives the page transition hooks from usePageTransitionMotion. app/layouts/default.vue owns the persistent site header, main landmark, footer, page transition shade, and cookie notice around every route. app/error.vue renders the not found and error states outside that layout. Each file under app/pages owns one route: it resolves route parameters, throws a 404 for an unknown range or product, sets the page metadata through usePageSeo, and renders one page component. Keep app.vue focused on providers, NuxtLayout, and NuxtPage.
+
+### Content modules
+
+app/lib/site.ts is the single source for the brand name, tagline, contact details, navigation, policy links, and the content status. Renaming the company is a change to that one file. While `contentStatus` is `placeholder`, nuxt.config.ts sets every page to `noindex, nofollow` and the robots route disallows crawling, so placeholder contacts, team entries, and borrowed photographs cannot be indexed as fact.
+
+app/lib/catalogue holds the product ranges and products as typed data, one file per range, with lookup helpers in index.ts. Each product may carry an image with its intrinsic size, a `fit`, and a `status` of `placeholder` or `final`. Pages and sections read the catalogue directly. Nothing fetches it, so every range and product page prerenders.
+
+### Collections, craft, awards, contact, and legal components
+
+app/components/collections owns the collections index, the range page, the product page, and ProductGridSection. app/components/craft and app/components/awards own their pages' sections. app/components/contact owns the contact page, the EnquiryForm, and its FormField wrapper. app/components/legal owns the shared policy page. These page components compose shared blocks and cards and do not depend on landing sections.
+
+### Server
+
+server/api/enquiry.post.ts accepts an enquiry. It validates the body with the Zod schema in shared/schemas/enquiry.ts, the same schema the form uses, and returns field messages with a 422 when validation fails. A filled honeypot field or a submission faster than three seconds is accepted silently and dropped. server/utils/enquiry-email.ts is the only delivery boundary: it sends through the Resend HTTP API using server-only runtime config, logs and accepts in development when delivery is not configured, and returns a 503 in production. server/routes/robots.txt.ts and server/routes/sitemap.xml.ts are generated from the site and catalogue modules, and server/utils/site-origin.ts resolves the public origin from `NUXT_PUBLIC_SITE_URL`.
 
 ### Landing components
 
@@ -113,18 +92,18 @@ A landing section should not become a general component merely because it contai
 ### About components
 
 app/components/about contains the About route's sections. AboutPage composes
-AboutHero, AboutTeamSection, AboutTrustSection, AboutBrandsSection, and
-AboutCtaSection, and app/pages/about.vue renders it with the route metadata.
+PageHero, AboutTeamSection, AboutTrustSection, AboutBrandsSection, and
+EnquiryCta, and app/pages/about.vue renders it with the route metadata.
 AboutPage wraps the trust, brands, and call to action sections in an isolated
 `about-story` block that holds their shared DrawnLine and marks the brands and
 call to action roots with `data-drawn-line-anchor`. AboutTeamSection holds its
 own DrawnLine.
-AboutTitle renders a title from explicit lines, each in its own mask, with an
-optional underlined word that carries a WaveUnderline. AboutMediaFrame wraps
-any image or placeholder in a frame and a parallax layer. AboutStatement is the
+LineTitle renders a title from explicit lines, each in its own mask, with an
+optional underlined word that carries a WaveUnderline. MediaFrame wraps
+any image or placeholder in a frame and a parallax layer. EditorialStatement is the
 large split statement, placed in the right two thirds of its section, shared by
 the trust and brands sections, and
-AboutSectionHeading pairs a title with a cycling image. AboutTeamMember shows a
+LineTitleMedia pairs a title with a cycling image. AboutTeamMember shows a
 portrait, or a placeholder when it receives none, a name, a role, and a round
 action. It owns a Dialog whose open state both the action and a click anywhere
 on the card set, locks the smooth scroll while it is open, and emits `activate`
@@ -142,7 +121,7 @@ may use shared components and UI primitives. They should not depend on a landing
 section.
 
 SiteCookieBanner owns the cookie notice. Its consent value lives in the
-byroose-cookie-consent cookie through Nuxt's useCookie, so the server and the
+xyz-tannery-cookie-consent cookie through Nuxt's useCookie, so the server and the
 first client render agree on whether the notice is visible and an accepted or
 declined notice never reappears. The layout withholds the banner until the home intro
 reports a complete state, so it never paints over the preloader.
@@ -154,7 +133,7 @@ useSmoothScroll rather than writing the scroll position itself.
 
 ### Card components
 
-app/components/cards contains reusable content presentation such as case studies, courses, articles, journey steps, and statistics. Cards receive typed content and variants through props. They do not fetch their own page data.
+app/components/cards contains reusable content presentation such as collection cases, products, and process steps. Cards receive typed content and variants through props. They do not fetch their own page data.
 
 ### Shared components
 
@@ -162,7 +141,7 @@ app/components/shared contains small project-wide composition patterns such as S
 
 ### UI primitives
 
-app/components/ui contains source-owned Shadcn Vue primitives. These components own generic behavior, accessibility, states, sizes, slots, and variants. They must not contain byroose page copy or feature-specific data. The dialog primitives wrap the Reka UI Dialog: DialogContent portals itself with its overlay, keeps the Shadcn close button behind a `showCloseButton` prop that defaults to `true`, and accepts an `overlayClass`.
+app/components/ui contains source-owned Shadcn Vue primitives. These components own generic behavior, accessibility, states, sizes, slots, and variants. They must not contain XYZ Tannery page copy or feature-specific data. The dialog primitives wrap the Reka UI Dialog: DialogContent portals itself with its overlay, keeps the Shadcn close button behind a `showCloseButton` prop that defaults to `true`, and accepts an `overlayClass`.
 
 Preserve Reka UI integration, attribute forwarding, data-slot values, keyboard behavior, focus behavior, and CVA contracts when modifying this layer.
 
@@ -276,15 +255,15 @@ JourneySection owns the step content and the slide wrappers, and
 JourneyStepCard owns the card layout and emits its title and description
 splits.
 
-useBlogMotion owns the blog section's reveal: the heading's title words and
-the `data-blog-cta` action rising from its `data-blog-cta-mask`, and for each
-`data-blog-card` the title line rise and the `data-blog-card-meta` rise. The
+useProductGridMotion owns the reveal of the featured products section and every product grid: the heading's title words and
+the `data-product-grid-cta` action rising from its `data-product-grid-cta-mask`, and for each
+`data-product-card` the title line rise and the `data-product-card-meta` rise. The
 cards themselves stay at rest. Cards that share a layout row are staggered from
 their measured `offsetTop` when they enter. It waits for the title's word split
 and every card title's line split, rebuilds a card's reveal when its title
 re-splits before it plays, and shows everything at rest under reduced motion.
-BlogSection owns the article content and collects the card title splits, and
-BlogCard owns the card layout and emits its title split.
+FeaturedProductsSection owns the article content and collects the card title splits, and
+ProductCard owns the card layout and emits its title split.
 
 useFaqMotion owns the FAQ section's motion: the `data-faq-title` line reveal,
 the staggered rise of each `data-faq-item`'s `data-faq-rise` question and icon
@@ -296,26 +275,26 @@ when the lines re-split before it plays, and resolves every reveal and toggle
 instantly under reduced motion. FaqSection owns the copy, the controlled
 accordion value, and the title and answer splits.
 
-useAboutHeroMotion owns the About hero. It waits for the description split
+usePageHeroMotion owns the About hero. It waits for the description split
 and the page transition's reveal point, then rises the title lines and, just
 before they land, the description lines, and scrubs the hero content down at half the
 scroll speed and fades it out while the hero leaves, so the team section covers it. It returns
 `revealed`, which lifts the hero's hidden CSS rest state.
 
-useAboutHeroTrail owns the About hero's cursor image trail. After the page
+usePageHeroTrail owns the About hero's cursor image trail. After the page
 transition's reveal point, inside a GSAP media context that matches only a fine
 hover pointer with motion allowed, it returns `armed` as true and listens to
 mouse pointer movement on the hero. It adds up the travelled distance and,
 each time it passes a third of the viewport width, plays the next
-`data-about-hero-trail-item` of the `data-about-hero-trail` layer at the
-pointer. AboutHero owns the image list and renders that layer only while
+`data-page-hero-trail-item` of the `data-page-hero-trail` layer at the
+pointer. PageHero owns the image list and renders that layer only while
 `armed` is true, so the server output and touch devices never request it.
 
-useAboutSectionMotion owns the scroll reveals of one About section. Inside its
-scope it reveals the `data-about-title` lines, clip reveals and parallaxes
-every `data-about-media` frame through its `data-about-media-layer`, rises the
-`data-about-rise` items of every `data-about-rise-group` from their
-`data-about-rise-mask`, and rises the lines of every `data-about-text` split,
+useSectionRevealMotion owns the scroll reveals of one About section. Inside its
+scope it reveals the `data-line-title` lines, clip reveals and parallaxes
+every `data-media-frame` frame through its `data-media-frame-layer`, rises the
+`data-section-rise` items of every `data-section-rise-group` from their
+`data-section-rise-mask`, and rises the lines of every `data-section-text` split,
 matched by order to the `textSplits` it receives. It returns `titleRevealed`,
 which the section feeds to its title underline.
 
@@ -597,9 +576,9 @@ Do not introduce global state for convenience.
 - Theme and viewport behavior must have a deterministic server fallback.
 - Heavy client-only modules should load lazily at the component that needs them.
 
-## Planned backend structure
+## Backend structure
 
-No application backend exists yet. Add these directories only when the first server feature requires them:
+The enquiry route is the only server feature so far. Grow the server along these lines only when a feature requires it:
 
 ~~~text
 server/
