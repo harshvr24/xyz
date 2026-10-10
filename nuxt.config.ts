@@ -58,9 +58,6 @@ export default defineNuxtConfig({
 				'lucide:arrow-up',
 				'lucide:arrow-up-right',
 				'lucide:check',
-				'lucide:github',
-				'lucide:instagram',
-				'lucide:linkedin',
 				'lucide:mail',
 				'lucide:map-pin',
 				'lucide:minus',
@@ -84,6 +81,7 @@ export default defineNuxtConfig({
 		noExternals: true,
 		prerender: {
 			crawlLinks: true,
+			ignore: ['/_vercel'],
 			routes: ['/', '/robots.txt', '/sitemap.xml'],
 		},
 	},
