@@ -1,0 +1,260 @@
+<script setup lang="ts">
+import { useMediaQuery } from "@vueuse/core";
+import {
+	nextTick,
+	onMounted,
+	onScopeDispose,
+	ref,
+	useTemplateRef,
+	watch,
+} from "vue";
+import type { TrailingTooltipSize } from "@/composables/useTrailingTooltip";
+import { stackRevealEase } from "@/lib/stack-reveal";
+
+interface TooltipLayer {
+	id: number;
+	src: string;
+}
+
+const {
+	active = false,
+	icon,
+	image = "",
+	label = "See Full Project",
+	size = "default",
+} = defineProps<{
+	active?: boolean;
+	icon?: string;
+	image?: string;
+	label?: string;
+	size?: TrailingTooltipSize;
+}>();
+
+const swapDuration = 0.6;
+
+const tooltip = useTemplateRef<HTMLElement>("tooltip");
+const media = useTemplateRef<HTMLElement>("media");
+const layers = ref<TooltipLayer[]>([]);
+const resizesSmoothly = ref(false);
+const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+const { createMatchMedia, gsap } = useGsap();
+let nextLayerId = 0;
+
+function keepLayersFrom(id: number) {
+	layers.value = layers.value.filter((layer) => layer.id >= id);
+}
+
+async function revealLayer(id: number) {
+	await nextTick();
+	const element = media.value?.querySelector<HTMLElement>(
+		`[data-tooltip-layer="${id}"]`,
+	);
+	if (!element) {
+		keepLayersFrom(id);
+		return;
+	}
+
+	gsap.fromTo(
+		element,
+		{ scale: 0 },
+		{
+			duration: swapDuration,
+			ease: stackRevealEase,
+			onComplete: () => keepLayersFrom(id),
+			scale: 1,
+		},
+	);
+}
+
+watch(
+	() => [active, image] as const,
+	([isActive, nextImage], previous) => {
+		if (!nextImage || nextImage === layers.value.at(-1)?.src) return;
+
+		const id = nextLayerId++;
+		const revealsOverPrevious =
+			Boolean(previous?.[0]) && isActive && layers.value.length > 0;
+
+		if (!revealsOverPrevious || prefersReducedMotion.value) {
+			layers.value = [{ id, src: nextImage }];
+			return;
+		}
+
+		layers.value = [...layers.value, { id, src: nextImage }];
+		return revealLayer(id);
+	},
+	{ flush: "post", immediate: true },
+);
+
+watch(
+	() => [active, size] as const,
+	([isActive], previous) => {
+		resizesSmoothly.value = Boolean(previous?.[0]) && isActive;
+	},
+);
+
+onMounted(() => {
+	createMatchMedia(
+		{
+			finePointer: "(hover: hover) and (pointer: fine)",
+			motion: "(prefers-reduced-motion: no-preference)",
+		},
+		(context) => {
+			const element = tooltip.value;
+			if (!element || !context.conditions?.finePointer) return;
+
+			const gap = 16;
+			const moveX = context.conditions.motion
+				? gsap.quickTo(element, "x", {
+						duration: 0.65,
+						ease: "power3.out",
+						force3D: false,
+					})
+				: (value: number) => {
+						gsap.set(element, { force3D: false, x: value });
+					};
+			const moveY = context.conditions.motion
+				? gsap.quickTo(element, "y", {
+						duration: 0.65,
+						ease: "power3.out",
+						force3D: false,
+					})
+				: (value: number) => {
+						gsap.set(element, { force3D: false, y: value });
+					};
+
+			const handlePointerMove = (event: PointerEvent) => {
+				moveX(event.clientX + gap);
+				moveY(event.clientY + gap);
+			};
+
+			window.addEventListener("pointermove", handlePointerMove, {
+				passive: true,
+			});
+
+			return () => {
+				window.removeEventListener("pointermove", handlePointerMove);
+				gsap.killTweensOf(element);
+				gsap.set(element, { clearProps: "transform" });
+			};
+		},
+		tooltip,
+	);
+});
+
+onScopeDispose(() => {
+	const element = media.value;
+	if (element) gsap.killTweensOf(element.children);
+});
+</script>
+
+<template>
+	<Teleport to="#teleports">
+		<div
+			ref="tooltip"
+			class="trailing-tooltip"
+			:data-active="active"
+			:data-size="size"
+			:data-resize="resizesSmoothly ? 'smooth' : undefined"
+			:data-media="layers.length > 0"
+			aria-hidden="true"
+		>
+			<span v-if="layers.length" ref="media" class="trailing-tooltip-media">
+				<NuxtImg
+					v-for="layer in layers"
+					:key="layer.id"
+					:data-tooltip-layer="layer.id"
+					class="trailing-tooltip-image"
+					:src="layer.src"
+					alt=""
+					width="96"
+					height="96"
+					sizes="sm:448px"
+					loading="eager"
+					draggable="false"
+				/>
+			</span>
+			<span class="trailing-tooltip-label">
+				{{ label }}
+				<Icon v-if="icon" class="trailing-tooltip-icon" :name="icon" />
+			</span>
+		</div>
+	</Teleport>
+</template>
+
+<style scoped>
+@reference '../../assets/css/tailwind.css';
+
+.trailing-tooltip {
+	--tooltip-resize: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	@apply pointer-events-none fixed top-0 left-0 z-50 flex items-center gap-5 overflow-hidden border border-border bg-card p-2 pr-8 text-card-foreground shadow-xl;
+	border-radius: 0.5rem;
+	clip-path: inset(50% 100% 50% 0 round 0.5rem);
+	transition: clip-path 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.trailing-tooltip[data-active="true"] {
+	clip-path: inset(0 0 0 0 round 0.5rem);
+}
+
+.trailing-tooltip-media {
+	@apply relative block size-26 shrink-0 overflow-hidden;
+	border-radius: calc(0.75rem - 0.5rem);
+}
+
+.trailing-tooltip-image {
+	@apply absolute inset-0 size-full object-cover;
+	border-radius: inherit;
+}
+
+.trailing-tooltip-label {
+	@apply inline-flex items-center gap-2 whitespace-nowrap text-3xl tracking-tighter leading-none font-semibold;
+}
+
+.trailing-tooltip-icon {
+	@apply size-[0.8em] shrink-0;
+}
+
+.trailing-tooltip[data-media="false"] {
+	@apply px-5 py-3;
+}
+
+.trailing-tooltip[data-size="compact"] {
+	@apply gap-3 p-1.5 pr-5;
+}
+
+.trailing-tooltip[data-size="compact"] .trailing-tooltip-media {
+	@apply size-16;
+	border-radius: calc(0.75rem - 0.375rem);
+}
+
+.trailing-tooltip[data-size="compact"] .trailing-tooltip-label {
+	@apply text-xl;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.trailing-tooltip[data-resize="smooth"] {
+		transition:
+			clip-path 0.75s cubic-bezier(0.19, 1, 0.22, 1),
+			padding var(--tooltip-resize),
+			gap var(--tooltip-resize);
+	}
+
+	.trailing-tooltip[data-resize="smooth"] .trailing-tooltip-media {
+		transition:
+			width var(--tooltip-resize),
+			height var(--tooltip-resize),
+			border-radius var(--tooltip-resize);
+	}
+
+	.trailing-tooltip[data-resize="smooth"] .trailing-tooltip-label {
+		transition: font-size var(--tooltip-resize);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.trailing-tooltip {
+		transition: none;
+	}
+}
+</style>

@@ -1,0 +1,148 @@
+import { onMounted, onScopeDispose } from "vue";
+import { unrefElement } from "@vueuse/core";
+import type { MaybeComputedElementRef } from "@vueuse/core";
+
+const menuLinkMotionConditions = {
+	hover: "(hover: hover)",
+	motion: "(prefers-reduced-motion: no-preference)",
+};
+
+const menuLinkRolloverTween = {
+	duration: 0.2,
+	ease: "power1.inOut",
+	force3D: true,
+	stagger: 0.02,
+} satisfies gsap.TweenVars;
+
+export function useMenuLinkMotion(target: MaybeComputedElementRef) {
+	const { createMatchMedia, gsap, loadPlugin } = useGsap();
+	let active = true;
+
+	onScopeDispose(() => {
+		active = false;
+	});
+
+	onMounted(async () => {
+		const SplitText = await loadPlugin("SplitText");
+		if (!SplitText || !active) return;
+
+		createMatchMedia(menuLinkMotionConditions, (context) => {
+			if (!context.conditions?.hover || !context.conditions?.motion) return;
+
+			const element = unrefElement(target);
+			if (!(element instanceof HTMLElement)) return;
+
+			const textContainer = element.querySelector(
+				":scope > [data-menu-texts]",
+			);
+			if (!textContainer) return;
+
+			const label = textContainer.querySelector<HTMLElement>(
+				":scope > [data-menu-label]",
+			);
+			const labelCopy = textContainer.querySelector<HTMLElement>(
+				":scope > [data-menu-label-copy]",
+			);
+			if (!label || !labelCopy) return;
+
+			const labelSplit = SplitText.create(label, {
+				aria: "hidden",
+				charsClass: "site-menu-character",
+				smartWrap: true,
+				tag: "span",
+				type: "chars",
+			});
+			const labelCopySplit = SplitText.create(labelCopy, {
+				aria: "hidden",
+				charsClass: "site-menu-character",
+				smartWrap: true,
+				tag: "span",
+				type: "chars",
+			});
+			const characters = [...labelSplit.chars, ...labelCopySplit.chars];
+
+			gsap.set(labelCopy, { visibility: "visible" });
+			gsap.set(labelCopySplit.chars, { force3D: true, yPercent: 100 });
+
+			const clearTransformHint = () => {
+				gsap.set(characters, { clearProps: "willChange" });
+			};
+
+			let rollover: gsap.core.Timeline | null = null;
+
+			const playRollover = (labelYPercent: number, copyYPercent: number) => {
+				rollover?.kill();
+				rollover = gsap
+					.timeline({ onComplete: clearTransformHint })
+					.to(
+						labelSplit.chars,
+						{ ...menuLinkRolloverTween, yPercent: labelYPercent },
+						0,
+					)
+					.to(
+						labelCopySplit.chars,
+						{ ...menuLinkRolloverTween, yPercent: copyYPercent },
+						0,
+					);
+			};
+
+			let pointerInside = false;
+			let focusVisible = false;
+			let covered = false;
+
+			const sync = () => {
+				const nextCovered = pointerInside || focusVisible;
+				if (nextCovered === covered) return;
+
+				covered = nextCovered;
+				gsap.set(characters, { willChange: "transform" });
+
+				if (covered) {
+					playRollover(-100, 0);
+					return;
+				}
+
+				playRollover(0, 100);
+			};
+
+			const handlePointerEnter = () => {
+				pointerInside = true;
+				sync();
+			};
+
+			const handlePointerLeave = () => {
+				pointerInside = false;
+				sync();
+			};
+
+			const handleFocus = () => {
+				focusVisible = element.matches(":focus-visible");
+				sync();
+			};
+
+			const handleBlur = () => {
+				focusVisible = false;
+				sync();
+			};
+
+			element.addEventListener("blur", handleBlur);
+			element.addEventListener("focus", handleFocus);
+			element.addEventListener("pointerenter", handlePointerEnter);
+			element.addEventListener("pointerleave", handlePointerLeave);
+
+			return () => {
+				element.removeEventListener("blur", handleBlur);
+				element.removeEventListener("focus", handleFocus);
+				element.removeEventListener("pointerenter", handlePointerEnter);
+				element.removeEventListener("pointerleave", handlePointerLeave);
+				rollover?.kill();
+				gsap.set(characters, {
+					clearProps: "transform,willChange",
+				});
+				gsap.set(labelCopy, { clearProps: "visibility" });
+				labelCopySplit.revert();
+				labelSplit.revert();
+			};
+		});
+	});
+}
