@@ -3,24 +3,30 @@ import { defineAsyncComponent, useTemplateRef } from "vue";
 import DrawnLine from "@/components/shared/DrawnLine.vue";
 import { aboutTeamLine } from "@/lib/about-line-path";
 import { appIcons } from "@/lib/icons";
+import { site } from "@/lib/site";
 import AboutTeamMember from "./AboutTeamMember.vue";
 import type {
 	AboutMemberPortrait,
 	AboutMemberSocial,
 } from "./AboutTeamMember.vue";
-import AboutTitle from "./AboutTitle.vue";
-import type { AboutTitleLine } from "./AboutTitle.vue";
+import LineTitle from "@/components/shared/LineTitle.vue";
+import type { LineTitleLine } from "@/components/shared/LineTitle.vue";
 
 const TrailingTooltip = defineAsyncComponent(
 	() => import("@/components/shared/TrailingTooltip.vue"),
 );
 
-const titleLines: readonly AboutTitleLine[] = [
+const titleLines: readonly LineTitleLine[] = [
 	{ text: "Who stands" },
-	{ text: "behind byroose", underlined: "behind" },
+	{ text: "behind the house", underlined: "behind" },
 ];
 
 const tooltipLabel = "More Info";
+const pendingRole = "Name and profile to follow";
+const pendingBio = [
+	"This profile is waiting for its portrait and a few lines about the person behind the role.",
+	"Until then, the quickest way to reach the team is by email.",
+];
 
 interface TeamMember {
 	bio: readonly string[];
@@ -30,62 +36,26 @@ interface TeamMember {
 	socials: readonly AboutMemberSocial[];
 }
 
+const emailSocial: AboutMemberSocial = {
+	href: `mailto:${site.email}`,
+	icon: appIcons.mail,
+	label: "Email",
+};
+
 const members: readonly TeamMember[] = [
-	{
-		bio: [
-			"Ruzan started byroose to bring AI content creation and web development into one connected practice, so brands stop juggling separate teams for what they say and where they say it.",
-			"Ruzan leads the creative direction on every project, from the first idea to the final cut, and makes sure each piece of content earns its place in front of the audience it was built for.",
-		],
-		name: "Ruzan Darbinyan",
-		portrait: {
-			alt: "Ruzan Darbinyan kicking one leg high beside a lamppost on a sunny street corner",
-			height: 1536,
-			src: "/images/founder.jpg",
-			width: 2048,
-		},
-		role: "Founder & Creative Director",
-		socials: [
-			{
-				href: "https://www.linkedin.com/in/ruzan-darbinian-b38855232/",
-				icon: appIcons.linkedin,
-				label: "LinkedIn",
-			},
-			{
-				href: "https://www.instagram.com/withroose_/",
-				icon: appIcons.instagram,
-				label: "Instagram",
-			},
-		],
-	},
-	{
-		bio: [
-			"Razmik co-founded byroose and builds the websites that turn attention into enquiries. Every site starts with a clear structure, loads fast, and stays easy to grow.",
-			"Razmik owns the technical side of each project, from the first prototype to launch, so the content and the code ship as one experience instead of two handoffs.",
-		],
-		name: "Razmik Matinyan",
-		role: "Co-Founder & Senior Web Developer",
-		socials: [
-			{
-				href: "https://www.linkedin.com/in/razmatinyan/",
-				icon: appIcons.linkedin,
-				label: "LinkedIn",
-			},
-			{
-				href: "https://www.instagram.com/razo.codes/",
-				icon: appIcons.instagram,
-				label: "Instagram",
-			},
-			{
-				href: "https://github.com/razmatinyan",
-				icon: appIcons.github,
-				label: "GitHub",
-			},
-		],
-	},
-];
+	"Managing Partner",
+	"Partner, Production",
+	"Partner, Sales",
+	"Head Merchandiser",
+].map((name) => ({
+	bio: pendingBio,
+	name,
+	role: pendingRole,
+	socials: [emailSocial],
+}));
 
 const teamRoot = useTemplateRef<HTMLElement>("teamRoot");
-const { titleRevealed } = useAboutSectionMotion(teamRoot);
+const { titleRevealed } = useSectionRevealMotion(teamRoot);
 const {
 	active: tooltipActive,
 	hide: hideTooltip,
@@ -103,7 +73,7 @@ function activateTooltip() {
 	<section ref="teamRoot" class="about-team section-gutter">
 		<DrawnLine class="about-team-line" />
 
-		<AboutTitle :drawn="titleRevealed" :lines="titleLines" />
+		<LineTitle :drawn="titleRevealed" :lines="titleLines" />
 
 		<div class="about-team-members">
 			<AboutTeamMember
@@ -149,16 +119,16 @@ function activateTooltip() {
 	@apply max-w-md md:max-w-none md:w-(--about-member-width);
 }
 
-.about-team-member:first-child {
+.about-team-member:nth-child(odd) {
 	@apply self-end;
 }
 
-.about-team-member:last-child {
+.about-team-member:nth-child(even) {
 	@apply self-start;
 }
 
 @media (min-width: 48rem) {
-	.about-team-member:last-child {
+	.about-team-member:nth-child(even) {
 		margin-top: calc(var(--about-member-width) * -0.45);
 	}
 }

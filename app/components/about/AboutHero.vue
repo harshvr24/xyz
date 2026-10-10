@@ -1,19 +1,26 @@
 <script setup lang="ts">
 import { shallowRef, useTemplateRef } from "vue";
 import SplitText from "@/components/shared/SplitText.vue";
-import AboutTitle from "./AboutTitle.vue";
-import type { AboutTitleLine } from "./AboutTitle.vue";
+import LineTitle from "@/components/shared/LineTitle.vue";
+import type { LineTitleLine } from "@/components/shared/LineTitle.vue";
+import { site } from "@/lib/site";
 import type { SplitTextResult } from "@/lib/split-text";
 
-const titleLines: readonly AboutTitleLine[] = [
+const titleLines: readonly LineTitleLine[] = [
    { text: "Welcome to" },
-   { text: "byroose" },
+   { text: site.name },
 ];
 const description =
-   "A creative agency that pairs AI content creation with web development, so your brand gets seen and chosen.";
-const trailImages = [1, 2, 3, 4, 5, 6, 7].map(
-   (index) => `/images/work/${index}.png`,
-);
+   "A leather and textile house making saddlery, horse rugs and yard essentials for riders, and a range for their dogs.";
+const trailImages = [
+   "leather-goods/soft-crown-bridle",
+   "leather-goods/saddle",
+   "horse-rugs/fleece-rug",
+   "leather-goods/soft-range-halter",
+   "leather-goods/long-riding-boot",
+   "horse-rugs/stable-rug",
+   "leather-goods/training-roller",
+].map((name) => `/images/products/${name}.jpg`);
 const trailSlots = [0, 1].flatMap((round) =>
    trailImages.map((src) => ({ id: `${round}-${src}`, src })),
 );
@@ -35,7 +42,7 @@ function setDescriptionSplit(parts: SplitTextResult) {
       :data-about-hero-revealed="revealed || undefined"
    >
       <div class="about-hero-content" data-about-hero-content>
-         <AboutTitle
+         <LineTitle
             as="h1"
             data-about-hero-reveal
             :lines="titleLines"
@@ -67,8 +74,8 @@ function setDescriptionSplit(parts: SplitTextResult) {
                class="about-hero-trail-image"
                :src="slot.src"
                alt=""
-               width="1080"
-               height="1440"
+               width="600"
+               height="800"
                sizes="sm:448px"
                loading="eager"
                draggable="false"
@@ -105,12 +112,12 @@ function setDescriptionSplit(parts: SplitTextResult) {
 }
 
 .about-hero-trail-item {
-   @apply invisible absolute top-0 left-0 block aspect-[3/4] overflow-hidden rounded-xl;
+   @apply invisible absolute top-0 left-0 block aspect-[3/4] overflow-hidden rounded-xl shadow-xl shadow-foreground/10 media-mat;
    width: clamp(9rem, 15vw, 16rem);
 }
 
 .about-hero-trail-image {
-   @apply size-full object-cover;
+   @apply size-full p-[10%] media-mat-image;
 }
 
 .about-hero:not([data-about-hero-revealed]) [data-about-hero-reveal] {

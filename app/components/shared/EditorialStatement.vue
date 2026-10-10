@@ -17,8 +17,8 @@ function handleSplit(parts: SplitTextResult) {
 
 <template>
    <SplitText
-      class="about-statement"
-      data-about-text
+      class="editorial-statement"
+      data-section-text
       as="p"
       mask="lines"
       :text="text"
@@ -30,25 +30,25 @@ function handleSplit(parts: SplitTextResult) {
 <style scoped>
 @reference '../../assets/css/tailwind.css';
 
-.about-statement {
+.editorial-statement {
    @apply m-0 mt-20 font-heading text-2xl leading-[0.95] font-medium tracking-[-0.02em] text-pretty md:mt-28 md:ml-auto md:w-2/3 md:text-4xl xl:mt-36 xl:text-5xl;
 }
 
-.about-statement :deep(.split-text-line),
-.about-statement :deep(.split-text-line-mask) {
+.editorial-statement :deep(.split-text-line),
+.editorial-statement :deep(.split-text-line-mask) {
    display: block;
 }
 
-.about-statement :deep(.split-text-line-mask) {
+.editorial-statement :deep(.split-text-line-mask) {
    margin-block: -0.12em -0.18em;
    padding-block: 0.12em 0.18em;
 }
 
-.about-statement :deep(.split-text-word) {
+.editorial-statement :deep(.split-text-word) {
    display: inline-block;
 }
 
-.about-statement :deep(.split-text-line) {
+.editorial-statement :deep(.split-text-line) {
    visibility: hidden;
 }
 </style>

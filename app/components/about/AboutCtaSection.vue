@@ -3,35 +3,34 @@ import { useTemplateRef } from "vue";
 import { NuxtLink } from "#components";
 import { Button, ButtonIcon } from "@/components/ui/button";
 import { appIcons } from "@/lib/icons";
-import AboutTitle from "./AboutTitle.vue";
-import type { AboutTitleLine } from "./AboutTitle.vue";
+import { site } from "@/lib/site";
+import LineTitle from "@/components/shared/LineTitle.vue";
+import type { LineTitleLine } from "@/components/shared/LineTitle.vue";
 
-const titleLines: readonly AboutTitleLine[] = [
-   { text: "Become chosen" },
-   { text: "byroose" },
+const titleLines: readonly LineTitleLine[] = [
+   { text: "Ride with" },
+   { text: site.name },
 ];
-const contactRoute = "/contact";
-const actionLabel = "Start Now";
 
 const ctaRoot = useTemplateRef<HTMLElement>("ctaRoot");
-useAboutSectionMotion(ctaRoot);
+useSectionRevealMotion(ctaRoot);
 </script>
 
 <template>
    <section ref="ctaRoot" class="about-cta section-gutter">
       <div class="about-cta-content">
-         <AboutTitle :lines="titleLines" size="display" />
-         <div class="about-cta-action-group" data-about-rise-group>
-            <div data-about-rise-mask>
-               <span class="about-cta-action-rise" data-about-rise>
+         <LineTitle :lines="titleLines" size="display" />
+         <div class="about-cta-action-group" data-section-rise-group>
+            <div data-section-rise-mask>
+               <span class="about-cta-action-rise" data-section-rise>
                   <Button
                      class="about-cta-action"
                      :as="NuxtLink"
-                     :to="contactRoute"
+                     :to="site.enquiryRoute"
                      variant="dark"
                      size="cta-lg"
                   >
-                     {{ actionLabel }}
+                     {{ site.enquiryLabel }}
                      <template #icon>
                         <ButtonIcon :icon="appIcons.arrowRight" />
                      </template>
@@ -54,7 +53,7 @@ useAboutSectionMotion(ctaRoot);
    @apply flex flex-col items-center;
 }
 
-.about-cta-content :deep(.about-title-display) {
+.about-cta-content :deep(.line-title-display) {
    font-size: min(clamp(3.5rem, 11vw, 12rem), 12vw);
 }
 

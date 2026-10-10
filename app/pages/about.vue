@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import AboutPage from "@/components/about/AboutPage.vue";
+import { site } from "@/lib/site";
 
-const title = "About byroose | AI content creation and web development";
-const description =
-   "Meet the team behind byroose, a creative agency that pairs AI content creation with web development so brands get seen, trusted, and chosen.";
+const title = `About ${site.name} | Leather saddlery and horse rugs`;
+const description = `Meet ${site.name}, a leather and textile house making saddlery, horse rugs, yard accessories and dog products for export buyers.`;
 
 useSeoMeta({
    description,

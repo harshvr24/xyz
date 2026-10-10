@@ -16,8 +16,8 @@ type SplitSource = MaybeRefOrGetter<SplitTextResult | undefined>;
 const selectors = {
    content: "[data-about-hero-content]",
    reveal: "[data-about-hero-reveal]",
-   titleLine: "[data-about-title-line]",
-   titleMask: "[data-about-title-mask]",
+   titleLine: "[data-line-title-line]",
+   titleMask: "[data-line-title-mask]",
 } as const;
 
 const descriptionLineStagger = 0.06;

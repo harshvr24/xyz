@@ -3,7 +3,7 @@ import { onScopeDispose, shallowRef, watch } from "vue";
 import MediaPlaceholder from "@/components/shared/MediaPlaceholder.vue";
 import { Button, ButtonIcon } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import AboutMediaFrame from "./AboutMediaFrame.vue";
+import MediaFrame from "@/components/shared/MediaFrame.vue";
 import AboutMemberDialog from "./AboutMemberDialog.vue";
 
 export interface AboutMemberPortrait {
@@ -63,7 +63,7 @@ onScopeDispose(unlockScroll);
 		@pointerleave="emit('deactivate')"
 	>
 		<Dialog v-model:open="open">
-			<AboutMediaFrame class="about-member-portrait">
+			<MediaFrame class="about-member-portrait">
 				<NuxtImg
 					v-if="portrait"
 					:src="portrait.src"
@@ -76,17 +76,17 @@ onScopeDispose(unlockScroll);
 					draggable="false"
 				/>
 				<MediaPlaceholder v-else />
-			</AboutMediaFrame>
+			</MediaFrame>
 
-			<div class="about-member-meta" data-about-rise-group>
-				<div class="about-member-mask about-member-name" data-about-rise-mask>
-					<h3 class="about-member-text" data-about-rise>{{ name }}</h3>
+			<div class="about-member-meta" data-section-rise-group>
+				<div class="about-member-mask about-member-name" data-section-rise-mask>
+					<h3 class="about-member-text" data-section-rise>{{ name }}</h3>
 				</div>
-				<div class="about-member-mask about-member-role" data-about-rise-mask>
-					<p class="about-member-text" data-about-rise>{{ role }}</p>
+				<div class="about-member-mask about-member-role" data-section-rise-mask>
+					<p class="about-member-text" data-section-rise>{{ role }}</p>
 				</div>
-				<div class="about-member-action" data-about-rise-mask>
-					<span class="about-member-action-rise" data-about-rise>
+				<div class="about-member-action" data-section-rise-mask>
+					<span class="about-member-action-rise" data-section-rise>
 						<DialogTrigger as-child>
 							<Button
 								variant="ribbon"

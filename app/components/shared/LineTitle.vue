@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import WaveUnderline from "@/components/shared/WaveUnderline.vue";
 
-export interface AboutTitleLine {
+export interface LineTitleLine {
    text: string;
    underlined?: string;
 }
@@ -16,7 +16,7 @@ const {
 } = defineProps<{
    as?: "h1" | "h2";
    drawn?: boolean;
-   lines: readonly AboutTitleLine[];
+   lines: readonly LineTitleLine[];
    size?: "display" | "section";
    underlineColor?: string;
 }>();
@@ -41,24 +41,24 @@ const segmentedLines = computed(() =>
 <template>
    <component
       :is="as"
-      class="about-title"
-      :class="`about-title-${size}`"
-      data-about-title
+      class="line-title"
+      :class="`line-title-${size}`"
+      data-line-title
    >
       <span class="sr-only">{{ label }}</span>
       <span aria-hidden="true">
          <span
             v-for="line in segmentedLines"
             :key="line.text"
-            class="about-title-mask"
-            data-about-title-mask
+            class="line-title-mask"
+            data-line-title-mask
          >
-            <span class="about-title-line" data-about-title-line>
+            <span class="line-title-line" data-line-title-line>
                <template v-for="segment in line.segments" :key="segment.text">
-                  <span v-if="segment.underlined" class="about-title-underlined"
+                  <span v-if="segment.underlined" class="line-title-underlined"
                      >{{ segment.text
                      }}<WaveUnderline
-                        class="about-title-wave"
+                        class="line-title-wave"
                         :color="underlineColor"
                         :drawn="drawn"
                   /></span>
@@ -73,39 +73,39 @@ const segmentedLines = computed(() =>
 <style scoped>
 @reference '../../assets/css/tailwind.css';
 
-.about-title {
+.line-title {
    @apply m-0 font-bold tracking-[-0.03em];
    line-height: 0.88;
    margin-top: -0.2em;
 }
 
-.about-title-display {
+.line-title-display {
    font-size: clamp(3.5rem, 11vw, 12rem);
 }
 
-.about-title-section {
+.line-title-section {
    font-size: clamp(2.75rem, 8vw, 8.5rem);
 }
 
-.about-title-mask,
-.about-title-line {
+.line-title-mask,
+.line-title-line {
    @apply block;
 }
 
-.about-title-mask {
+.line-title-mask {
    margin-bottom: -0.4em;
    padding-block: 0.2em;
 }
 
-.about-title-line {
+.line-title-line {
    @apply whitespace-nowrap;
 }
 
-.about-title-underlined {
+.line-title-underlined {
    @apply relative inline-block;
 }
 
-.about-title-wave {
+.line-title-wave {
    @apply absolute top-full left-0 -mt-[0.04em];
 }
 </style>

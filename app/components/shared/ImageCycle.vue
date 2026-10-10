@@ -13,10 +13,12 @@ interface CycleImage {
 }
 
 const {
+   fit = "cover",
    images,
    interval = 750,
    sizes,
 } = defineProps<{
+   fit?: "contain" | "cover";
    images: readonly CycleImage[];
    interval?: number;
    sizes: string;
@@ -53,6 +55,7 @@ function showNextImage() {
          v-for="(image, index) in images"
          :key="image.src"
          class="image-cycle-image"
+         :class="{ 'image-cycle-image-contain': fit === 'contain' }"
          :data-active="index === activeIndex"
          :src="image.src"
          alt=""
@@ -74,6 +77,10 @@ function showNextImage() {
 
 .image-cycle-image {
    @apply absolute inset-0 size-full object-cover opacity-0 select-none;
+}
+
+.image-cycle-image-contain {
+   @apply p-[14%] media-mat-image;
 }
 
 .image-cycle-image[data-active="true"] {

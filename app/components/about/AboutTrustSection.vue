@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import { shallowRef, useTemplateRef } from "vue";
-import AboutSectionHeading from "./AboutSectionHeading.vue";
-import AboutStatement from "./AboutStatement.vue";
-import type { AboutTitleLine } from "./AboutTitle.vue";
+import LineTitleMedia from "@/components/shared/LineTitleMedia.vue";
+import EditorialStatement from "@/components/shared/EditorialStatement.vue";
+import type { LineTitleLine } from "@/components/shared/LineTitle.vue";
 import type { SplitTextResult } from "@/lib/split-text";
 
-const titleLines: readonly AboutTitleLine[] = [
-   { text: "Why people" },
-   { text: "trust byroose", underlined: "trust" },
+const titleLines: readonly LineTitleLine[] = [
+   { text: "Why buyers" },
+   { text: "trust the house", underlined: "trust" },
 ];
 
 const headingImages = [
-   { height: 1919, src: "/images/work/1.png", width: 1080 },
-   { height: 1919, src: "/images/work/2.png", width: 1080 },
-   { height: 1620, src: "/images/work/3.png", width: 1080 },
-   { height: 1919, src: "/images/work/4.png", width: 1080 },
+   { height: 896, src: "/images/products/leather-goods/soft-crown-bridle.jpg", width: 480 },
+   { height: 804, src: "/images/products/leather-goods/saddle.jpg", width: 888 },
+   { height: 1226, src: "/images/products/leather-goods/soft-range-halter.jpg", width: 601 },
+   { height: 584, src: "/images/products/leather-goods/pony-pad.jpg", width: 551 },
 ] as const;
 
 const statement =
-   "You talk to the people doing the work, not an account layer. Every project starts with a clear hypothesis and ends with an honest readout, so you always know what worked, what didn't, and what comes next.";
+   "Our mission is simple: give companies and riders products they can count on. That means sound materials, new ideas where they help the horse, and the same standard on the last piece of an order as on the first.";
 
 const trustRoot = useTemplateRef<HTMLElement>("trustRoot");
 const statementSplit = shallowRef<SplitTextResult>();
-const { titleRevealed } = useAboutSectionMotion(trustRoot, {
+const { titleRevealed } = useSectionRevealMotion(trustRoot, {
    textSplits: () => [statementSplit.value],
 });
 
@@ -33,13 +33,14 @@ function setStatementSplit(parts: SplitTextResult) {
 
 <template>
    <section ref="trustRoot" class="about-trust section-gutter">
-      <AboutSectionHeading
+      <LineTitleMedia
          :drawn="titleRevealed"
+         fit="contain"
          :images="headingImages"
          :lines="titleLines"
          underline-color="var(--color-ribbon)"
       />
-      <AboutStatement :text="statement" @split="setStatementSplit" />
+      <EditorialStatement :text="statement" @split="setStatementSplit" />
    </section>
 </template>
 

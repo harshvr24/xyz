@@ -30,15 +30,15 @@ interface AboutSectionMotionOptions {
 }
 
 const selectors = {
-   media: "[data-about-media]",
-   mediaLayer: "[data-about-media-layer]",
-   rise: "[data-about-rise]",
-   riseGroup: "[data-about-rise-group]",
-   riseMask: "[data-about-rise-mask]",
-   text: "[data-about-text]",
-   title: "[data-about-title]",
-   titleLine: "[data-about-title-line]",
-   titleMask: "[data-about-title-mask]",
+   media: "[data-media-frame]",
+   mediaLayer: "[data-media-frame-layer]",
+   rise: "[data-section-rise]",
+   riseGroup: "[data-section-rise-group]",
+   riseMask: "[data-section-rise-mask]",
+   text: "[data-section-text]",
+   title: "[data-line-title]",
+   titleLine: "[data-line-title-line]",
+   titleMask: "[data-line-title-mask]",
 } as const;
 
 const hiddenMediaClip = "inset(0% 0% 100% 0%)";
@@ -51,7 +51,7 @@ function queryAll(root: HTMLElement, selector: string) {
    return Array.from(root.querySelectorAll<HTMLElement>(selector));
 }
 
-export function useAboutSectionMotion(
+export function useSectionRevealMotion(
    scope: MotionScope,
    { textSplits = [] }: AboutSectionMotionOptions = {},
 ) {
