@@ -14,8 +14,8 @@ type MotionScope = MaybeRefOrGetter<HTMLElement | null | undefined>;
 type SplitSource = MaybeRefOrGetter<SplitTextResult | undefined>;
 
 const selectors = {
-   content: "[data-about-hero-content]",
-   reveal: "[data-about-hero-reveal]",
+   content: "[data-page-hero-content]",
+   reveal: "[data-page-hero-reveal]",
    titleLine: "[data-line-title-line]",
    titleMask: "[data-line-title-mask]",
 } as const;
@@ -28,7 +28,7 @@ function queryAll(root: HTMLElement, selector: string) {
    return Array.from(root.querySelectorAll<HTMLElement>(selector));
 }
 
-export function useAboutHeroMotion(
+export function usePageHeroMotion(
    scope: MotionScope,
    descriptionSplit: SplitSource,
 ) {

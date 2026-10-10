@@ -71,8 +71,18 @@ export default defineNuxtConfig({
 		},
 	},
 
+	runtimeConfig: {
+		enquiryFrom: '',
+		enquiryTo: '',
+		resendApiKey: '',
+	},
+
 	nitro: {
 		noExternals: true,
+		prerender: {
+			crawlLinks: true,
+			routes: ['/'],
+		},
 	},
 
 	vite: {

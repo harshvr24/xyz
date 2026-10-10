@@ -25,7 +25,7 @@ type SplitListSource = MaybeRefOrGetter<
    readonly (SplitTextResult | undefined)[]
 >;
 
-interface AboutSectionMotionOptions {
+interface SectionRevealMotionOptions {
    textSplits?: SplitListSource;
 }
 
@@ -53,7 +53,7 @@ function queryAll(root: HTMLElement, selector: string) {
 
 export function useSectionRevealMotion(
    scope: MotionScope,
-   { textSplits = [] }: AboutSectionMotionOptions = {},
+   { textSplits = [] }: SectionRevealMotionOptions = {},
 ) {
    const { createMatchMedia, gsap, loadPlugin } = useGsap();
    const { refresh } = useSmoothScroll();

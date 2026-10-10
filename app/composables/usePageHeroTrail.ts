@@ -9,15 +9,15 @@ interface PointerPoint {
 }
 
 const selectors = {
-   item: "[data-about-hero-trail-item]",
-   layer: "[data-about-hero-trail]",
+   item: "[data-page-hero-trail-item]",
+   layer: "[data-page-hero-trail]",
 } as const;
 
 const spawnDistanceRatio = 1 / 3;
 const throwMultiplier = 4;
 const randomSpread = (range: number) => (Math.random() - 0.5) * range;
 
-export function useAboutHeroTrail(scope: MotionScope) {
+export function usePageHeroTrail(scope: MotionScope) {
    const { createMatchMedia, gsap } = useGsap();
    const { waitForReveal } = usePageTransition();
    const armed = shallowRef(false);
