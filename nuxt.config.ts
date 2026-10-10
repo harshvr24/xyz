@@ -75,13 +75,16 @@ export default defineNuxtConfig({
 		enquiryFrom: '',
 		enquiryTo: '',
 		resendApiKey: '',
+		public: {
+			siteUrl: '',
+		},
 	},
 
 	nitro: {
 		noExternals: true,
 		prerender: {
 			crawlLinks: true,
-			routes: ['/'],
+			routes: ['/', '/robots.txt', '/sitemap.xml'],
 		},
 	},
 

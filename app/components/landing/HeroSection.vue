@@ -217,7 +217,7 @@ function handleDescriptionSplit(parts: SplitTextResult) {
 }
 
 .hero-title {
-   @apply m-0 leading-[0.82] font-bold tracking-[-0.03em] lg:col-start-2 lg:row-start-1;
+   @apply m-0 leading-[0.88] font-bold tracking-[-0.03em] lg:col-start-2 lg:row-start-1;
    font-size: calc((100vw - 2 * var(--spacing-page)) / 7.6);
    margin-top: -0.22em;
    max-width: 7.4em;

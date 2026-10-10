@@ -6,12 +6,7 @@ const title = `Awards and recognition | ${site.name}`
 const description =
 	'The awards, certificates and trade memberships of the house, kept in one place.'
 
-useSeoMeta({
-	description,
-	ogDescription: description,
-	ogTitle: title,
-	title,
-})
+usePageSeo({ description, title })
 </script>
 
 <template>

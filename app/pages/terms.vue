@@ -8,12 +8,7 @@ const description =
 	'The terms that apply to using this website and to enquiries made through it.'
 const lines: readonly LineTitleLine[] = [{ text: 'Terms and' }, { text: 'conditions' }]
 
-useSeoMeta({
-	description,
-	ogDescription: description,
-	ogTitle: title,
-	title,
-})
+usePageSeo({ description, title })
 </script>
 
 <template>

@@ -8,12 +8,7 @@ const description =
 	'How we handle the details you share when you browse this website or send an enquiry.'
 const lines: readonly LineTitleLine[] = [{ text: 'Privacy' }, { text: 'policy' }]
 
-useSeoMeta({
-	description,
-	ogDescription: description,
-	ogTitle: title,
-	title,
-})
+usePageSeo({ description, title })
 </script>
 
 <template>

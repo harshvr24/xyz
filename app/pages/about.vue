@@ -5,12 +5,7 @@ import { site } from "@/lib/site";
 const title = `About ${site.name} | Leather saddlery and horse rugs`;
 const description = `Meet ${site.name}, a leather and textile house making saddlery, horse rugs, yard accessories and dog products for export buyers.`;
 
-useSeoMeta({
-   description,
-   ogDescription: description,
-   ogTitle: title,
-   title,
-});
+usePageSeo({ description, title });
 </script>
 
 <template>

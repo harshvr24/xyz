@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import ProductPage from '@/components/collections/ProductPage.vue'
-import { getProduct, getRange } from '@/lib/catalogue'
+import {
+	collectionsRoute,
+	getProduct,
+	getProductPath,
+	getRange,
+	getRangePath,
+} from '@/lib/catalogue'
 import { site } from '@/lib/site'
 
 const route = useRoute()
@@ -19,11 +25,14 @@ if (!range || !product) {
 
 const title = `${product.name} | ${range.name} | ${site.name}`
 
-useSeoMeta({
+usePageSeo({
+	breadcrumbs: [
+		{ name: 'Collections', path: collectionsRoute },
+		{ name: range.name, path: getRangePath(range.slug) },
+		{ name: product.name, path: getProductPath(product) },
+	],
 	description: product.summary,
-	ogDescription: product.summary,
-	ogImage: product.image?.src,
-	ogTitle: title,
+	image: product.image?.src,
 	title,
 })
 </script>
