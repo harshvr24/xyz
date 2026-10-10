@@ -1,4 +1,4 @@
-import type { ProductImage, RangeSlug } from './types'
+import type { ImageFit, ProductImage, RangeSlug } from './types'
 
 export function placeholderImage(
 	range: RangeSlug,
@@ -6,9 +6,11 @@ export function placeholderImage(
 	alt: string,
 	width: number,
 	height: number,
+	fit: ImageFit = 'contain',
 ): ProductImage {
 	return {
 		alt,
+		fit,
 		height,
 		src: `/images/products/${range}/${slug}.jpg`,
 		status: 'placeholder',

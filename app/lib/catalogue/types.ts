@@ -4,10 +4,13 @@ export type RangeSlug =
 	| 'horse-rugs'
 	| 'leather-goods'
 
+export type ImageFit = 'contain' | 'cover'
+
 export type ImageStatus = 'final' | 'placeholder'
 
 export interface ProductImage {
 	alt: string
+	fit: ImageFit
 	height: number
 	src: string
 	status: ImageStatus

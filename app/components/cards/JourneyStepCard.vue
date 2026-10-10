@@ -28,7 +28,7 @@ const {
 	title: string
 }>()
 
-const servicesRoute = '/services'
+const craftRoute = '/craft'
 
 const actionVariants: Record<Theme, ButtonVariant> = {
 	forest: 'light',
@@ -95,7 +95,7 @@ const surfaceClasses: Record<Theme, string> = {
 				<span class="journey-step-action" data-journey-step-cta>
 					<Button
 						:as="NuxtLink"
-						:to="servicesRoute"
+						:to="craftRoute"
 						:variant="actionVariants[theme]"
 						:rollover-tones="actionRolloverTones[theme]"
 						size="cta-lg"
@@ -171,14 +171,14 @@ const surfaceClasses: Record<Theme, string> = {
 }
 
 .journey-step-media {
-	@apply relative row-start-4 min-h-0 overflow-hidden rounded-2xl md:col-start-2 md:row-start-2 md:aspect-16/11;
+	@apply relative row-start-4 min-h-0 overflow-hidden rounded-2xl media-mat md:col-start-2 md:row-start-2 md:aspect-16/11;
 	margin-top: calc(
 		-1 * (var(--journey-step-row-gap) + var(--journey-step-label) * 0.3)
 	);
 }
 
 .journey-step-image {
-	@apply pointer-events-none size-full object-cover select-none;
+	@apply pointer-events-none size-full p-[8%] select-none media-mat-image;
 }
 
 .journey-step-title :deep(.split-text-line),

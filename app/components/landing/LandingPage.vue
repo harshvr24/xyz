@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, shallowRef, useTemplateRef } from "vue";
 import type { SplitTextResult } from "@/lib/split-text";
-import BlogSection from "./BlogSection.vue";
 import FaqSection from "./FaqSection.vue";
+import FeaturedProductsSection from "./FeaturedProductsSection.vue";
 import HeroSection from "./HeroSection.vue";
 import JourneySection from "./JourneySection.vue";
 import ServicesSection from "./ServicesSection.vue";
@@ -47,7 +47,7 @@ function setDescriptionSplit(parts: SplitTextResult) {
 		<WorkSection />
 		<ServicesSection />
 		<JourneySection />
-		<BlogSection />
+		<FeaturedProductsSection />
 		<FaqSection />
 	</div>
 </template>

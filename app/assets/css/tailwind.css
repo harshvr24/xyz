@@ -359,6 +359,15 @@
 	mix-blend-mode: multiply;
 }
 
+@utility media-mat {
+	@apply bg-paper;
+}
+
+@utility media-mat-image {
+	@apply object-contain;
+	mix-blend-mode: multiply;
+}
+
 @utility surface-oxblood {
 	@apply bg-primary text-primary-foreground;
 }

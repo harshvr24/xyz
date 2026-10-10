@@ -2,6 +2,7 @@
 import { NuxtLink } from "#components";
 import SplitText from "@/components/shared/SplitText.vue";
 import { Button, ButtonIcon } from "@/components/ui/button";
+import { site } from "@/lib/site";
 import type { SplitTextResult } from "@/lib/split-text";
 
 const emit = defineEmits<{
@@ -10,83 +11,113 @@ const emit = defineEmits<{
 }>();
 
 const heroTitle =
-   "Scrolled past? Make AI content that turns views into new clients";
+   "Saddlery, horse rugs and leather goods, made for the long ride";
 const heroDescription =
-   "Most brands post more and get noticed less. We pair AI content creation with web development, so your visuals get seen and your site turns that attention into enquiries.";
-const heroActionLabel = "Start a project";
+   "We cut, stitch and finish bridles, girths, saddles, rugs and dog gear for export buyers. Tell us what your riders need and we will quote it, sample it and ship it.";
+const heroActionLabel = site.enquiryLabel;
 
-const heroImages = [
+interface HeroImage {
+   fit: "contain" | "cover";
+   height: number;
+   id: string;
+   preload: boolean;
+   removed: boolean;
+   rotation: number;
+   src: string;
+   width: number;
+}
+
+const saddle = {
+   fit: "contain",
+   height: 804,
+   src: "/images/products/leather-goods/saddle.jpg",
+   width: 888,
+} as const;
+
+const heroImages: readonly HeroImage[] = [
+   { ...saddle, id: "hero-one", preload: true, removed: true, rotation: 0 },
    {
-      id: "hero-one",
-      preload: true,
-      removed: true,
-      rotation: 0,
-      src: "/images/hero/1.png",
-   },
-   {
+      fit: "contain",
+      height: 495,
       id: "hero-two",
       preload: false,
       removed: true,
       rotation: 0,
-      src: "/images/hero/2.png",
+      src: "/images/products/leather-goods/stirrup-leather.jpg",
+      width: 1393,
    },
    {
+      fit: "contain",
+      height: 556,
       id: "hero-three",
       preload: false,
       removed: true,
       rotation: -3,
-      src: "/images/hero/3.png",
+      src: "/images/products/leather-goods/long-riding-boot.jpg",
+      width: 716,
    },
    {
+      fit: "contain",
+      height: 1028,
       id: "hero-four",
       preload: false,
       removed: true,
       rotation: 2,
-      src: "/images/hero/4.png",
+      src: "/images/products/horse-rugs/stable-rug.jpg",
+      width: 1660,
    },
    {
+      fit: "contain",
+      height: 1490,
       id: "hero-five",
       preload: false,
       removed: true,
       rotation: -1.5,
-      src: "/images/hero/5.png",
+      src: "/images/products/horse-rugs/coolex-rug.jpg",
+      width: 1612,
    },
    {
+      fit: "contain",
+      height: 485,
       id: "hero-six",
       preload: false,
       removed: true,
       rotation: 2.5,
-      src: "/images/hero/6.png",
+      src: "/images/products/leather-goods/short-riding-boot.jpg",
+      width: 502,
    },
+   { ...saddle, id: "hero-seven", preload: true, removed: false, rotation: -1.5 },
    {
-      id: "hero-seven",
-      preload: true,
-      removed: false,
-      rotation: -1.5,
-      src: "/images/hero/3.png",
-   },
-   {
+      fit: "cover",
+      height: 701,
       id: "hero-eight",
       preload: false,
       removed: false,
       rotation: 2,
-      src: "/images/hero/2.png",
+      src: "/images/products/leather-goods/tendon-boot.jpg",
+      width: 800,
    },
    {
+      fit: "cover",
+      height: 1160,
       id: "hero-nine",
       preload: false,
       removed: false,
       rotation: -3,
-      src: "/images/hero/5.png",
+      src: "/images/products/leather-goods/halter.jpg",
+      width: 800,
    },
    {
+      fit: "contain",
+      height: 1607,
       id: "hero-ten",
       preload: false,
       removed: false,
       rotation: 2,
-      src: "/images/hero/1.png",
+      src: "/images/products/horse-rugs/fleece-rug.jpg",
+      width: 2143,
    },
-] as const;
+];
 
 function handleTitleSplit(parts: SplitTextResult) {
    emit("titleSplit", parts);
@@ -125,7 +156,7 @@ function handleDescriptionSplit(parts: SplitTextResult) {
                <span data-home-intro-action class="hero-action-inner">
                   <Button
                      :as="NuxtLink"
-                     to="/contact"
+                     :to="site.enquiryRoute"
                      variant="dark"
                      size="cta-lg"
                   >
@@ -154,10 +185,11 @@ function handleDescriptionSplit(parts: SplitTextResult) {
          >
             <NuxtImg
                class="hero-media-image"
+               :class="{ 'hero-media-image-contain': image.fit === 'contain' }"
                :src="image.src"
                alt=""
-               width="1456"
-               height="816"
+               :width="image.width"
+               :height="image.height"
                sizes="sm:768px lg:1024px xl:1280px 2xl:1536px"
                densities="x1"
                loading="eager"
@@ -226,7 +258,7 @@ function handleDescriptionSplit(parts: SplitTextResult) {
 }
 
 .hero-media-card {
-   @apply relative aspect-4/3 overflow-hidden rounded-md bg-muted;
+   @apply relative aspect-4/3 overflow-hidden rounded-md media-mat;
    transform-origin: center;
 }
 
@@ -275,5 +307,9 @@ function handleDescriptionSplit(parts: SplitTextResult) {
 
 .hero-media-image {
    @apply absolute inset-0 size-full object-cover;
+}
+
+.hero-media-image-contain {
+   @apply p-[7%] media-mat-image;
 }
 </style>

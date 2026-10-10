@@ -4,6 +4,13 @@ import CaseStudyCard from "@/components/cards/CaseStudyCard.vue";
 import MoreWorksPanel from "./MoreWorksPanel.vue";
 import WorkLine from "./WorkLine.vue";
 import SplitText from "@/components/shared/SplitText.vue";
+import {
+	getProduct,
+	getProductsByRange,
+	getRangePath,
+	ranges,
+} from "@/lib/catalogue";
+import type { ProductImage, RangeSlug } from "@/lib/catalogue";
 import type { SplitTextResult } from "@/lib/split-text";
 import type { SurfaceTone } from "@/lib/surfaces";
 
@@ -11,72 +18,66 @@ const TrailingTooltip = defineAsyncComponent(
 	() => import("@/components/shared/TrailingTooltip.vue"),
 );
 
-interface CaseStudy {
-	client: string;
-	description: string;
-	image: string;
-	imageAlt: string;
-	results: readonly { label: string; value: string }[];
+interface RangeLook {
+	cover: string;
 	revealTones: readonly SurfaceTone[];
 	tone: SurfaceTone;
 }
 
-const workTitle = "What we've done";
+interface CollectionCase {
+	description: string;
+	href: string;
+	image?: ProductImage;
+	results: readonly { label: string; value: string }[];
+	revealTones: readonly SurfaceTone[];
+	title: string;
+	tone: SurfaceTone;
+}
 
-const caseStudies: CaseStudy[] = [
-	{
-		client: "Nova Dairy",
-		description:
-			"A launch film and sixty cutdowns produced in one sprint, cut for every placement the brand actually buys.",
-		image: "/images/hero/1.png",
-		imageAlt: "Nova Dairy project visual",
-		results: [
-			{ label: "Views earned across the launch", value: "11M" },
-			{ label: "Cutdowns delivered in one sprint", value: "60" },
-		],
+const workTitle = "What we make";
+const tooltipText = "View collection";
+
+const rangeLooks: Record<RangeSlug, RangeLook> = {
+	"dog-products": {
+		cover: "dog-harness",
+		revealTones: ["gold", "navy", "tan", "forest"],
+		tone: "gold",
+	},
+	"horse-accessories": {
+		cover: "saddle-pad",
+		revealTones: ["forest", "gold", "primary", "tan"],
+		tone: "forest",
+	},
+	"horse-rugs": {
+		cover: "coolex-rug",
+		revealTones: ["tan", "primary", "navy", "gold"],
+		tone: "navy",
+	},
+	"leather-goods": {
+		cover: "tendon-boot",
 		revealTones: ["navy", "forest", "gold", "primary"],
 		tone: "primary",
 	},
-	{
-		client: "Kessler Tools",
-		description:
-			"A product site rebuilt around how buyers actually search, from the category pages down to the specs they compare.",
-		image: "/images/hero/2.png",
-		imageAlt: "Kessler Tools project visual",
+};
+
+const collections: readonly CollectionCase[] = ranges.map((range) => {
+	const look = rangeLooks[range.slug];
+
+	return {
+		description: range.description,
+		href: getRangePath(range.slug),
+		image: getProduct(range.slug, look.cover)?.image,
 		results: [
-			{ label: "More qualified enquiries", value: "41%" },
-			{ label: "Organic traffic to category pages", value: "3.2x" },
+			{
+				label: "Products in this range",
+				value: String(getProductsByRange(range.slug).length),
+			},
 		],
-		revealTones: ["tan", "primary", "navy", "gold"],
-		tone: "gold",
-	},
-	{
-		client: "Halden Clinics",
-		description:
-			"A booking flow rebuilt in five weeks, with the questions patients could not answer taken out of the way.",
-		image: "/images/hero/3.png",
-		imageAlt: "Halden Clinics project visual",
-		results: [
-			{ label: "Increase in completed bookings", value: "+38%" },
-			{ label: "From brief to a live booking flow", value: "5 wks" },
-		],
-		revealTones: ["forest", "gold", "primary", "tan"],
-		tone: "tan",
-	},
-	{
-		client: "Marrow & Co",
-		description:
-			"One landing page rebuilt around a single offer, with the proof moved above the decision.",
-		image: "/images/hero/4.png",
-		imageAlt: "Marrow and Co project visual",
-		results: [
-			{ label: "Conversion rate, up from 3.1%", value: "4.7%" },
-			{ label: "Lower bounce rate on the offer page", value: "-24%" },
-		],
-		revealTones: ["gold", "navy", "tan", "forest"],
-		tone: "forest",
-	},
-];
+		revealTones: look.revealTones,
+		title: range.title,
+		tone: look.tone,
+	};
+});
 
 const workRoot = useTemplateRef<HTMLElement>("workRoot");
 const titleSplit = shallowRef<SplitTextResult>();
@@ -97,8 +98,8 @@ function setTitleSplit(parts: SplitTextResult) {
 	titleSplit.value = parts;
 }
 
-function activateTooltip(item: CaseStudy) {
-	showTooltip(item.image);
+function activateTooltip(item: CollectionCase) {
+	showTooltip(item.image?.src, tooltipText);
 }
 
 function activatePanelTooltip(image: string, label: string) {
@@ -122,8 +123,8 @@ function activatePanelTooltip(image: string, label: string) {
 				<WorkLine />
 
 				<CaseStudyCard
-					v-for="item in caseStudies"
-					:key="item.client"
+					v-for="item in collections"
+					:key="item.href"
 					v-bind="item"
 					@activate="activateTooltip(item)"
 					@deactivate="deactivateTooltip"

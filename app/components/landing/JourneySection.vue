@@ -4,34 +4,34 @@ import JourneyStepCard from '@/components/cards/JourneyStepCard.vue'
 import SplitText from '@/components/shared/SplitText.vue'
 import type { SplitTextResult } from '@/lib/split-text'
 
-const journeyTitle = 'Working process'
+const journeyTitle = 'How we make it'
 
 const journeySteps = [
 	{
 		number: '01',
-		title: 'Diagnose',
+		title: 'Select',
 		body:
-			'Two weeks of interviews, analytics and a teardown of your current site and content. You get a written diagnosis: what your audience actually responds to, where the site loses them, and the three things worth fixing first.',
-		image: '/images/hero/1.png',
-		action: 'Explore the diagnosis',
+			'Every order starts with the material. Hides, webbing, cloth and fittings are chosen for the job and checked before a single piece is cut.',
+		image: '/images/products/leather-goods/stirrup-leather.jpg',
+		action: 'See how we select',
 		theme: 'ivory' as const,
 	},
 	{
 		number: '02',
-		title: 'Build',
+		title: 'Craft',
 		body:
-			'Design, copy, site and content assets produced in one sprint cadence. Weekly demos, no dark period. Everything ships behind measurement so we know what moved.',
-		image: '/images/hero/5.png',
-		action: 'See what we build',
+			'Patterns are cut, edges are dressed and seams are stitched close. Leather goes to the bench for finishing, rugs go to machines built for heavy cloth.',
+		image: '/images/products/leather-goods/saddle.jpg',
+		action: 'See how we craft',
 		theme: 'forest' as const,
 	},
 	{
 		number: '03',
-		title: 'Scale',
+		title: 'Deliver',
 		body:
-			'The formats that earn attention get made again, the rest get dropped, monthly. Content volume goes up through the AI pipeline while a human editor holds the line on quality.',
-		image: '/images/hero/2.png',
-		action: 'See how we scale',
+			'Each piece is checked against its sample, then packed and documented for export. You get one shipment, one standard and one team to call.',
+		image: '/images/products/horse-rugs/rain-rug-combo.jpg',
+		action: 'See how we deliver',
 		theme: 'oxblood' as const,
 	},
 ]

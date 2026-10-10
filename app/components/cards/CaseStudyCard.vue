@@ -1,27 +1,29 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue"
+import MediaPlaceholder from "@/components/shared/MediaPlaceholder.vue"
 import { Card } from "@/components/ui/card"
+import type { ProductImage } from "@/lib/catalogue"
 import { surfaceTones } from "@/lib/surfaces"
 import type { SurfaceTone } from "@/lib/surfaces"
 import { cn } from "@/lib/utils"
 
 const {
 	class: className,
-	client,
 	description,
+	href,
 	image,
-	imageAlt,
 	results,
 	revealTones = ["primary", "gold", "navy", "forest"],
+	title,
 	tone = "primary",
 } = defineProps<{
 	class?: HTMLAttributes["class"]
-	client: string
 	description: string
-	image: string
-	imageAlt: string
+	href?: string
+	image?: ProductImage
 	results: readonly { label: string, value: string }[]
 	revealTones?: readonly SurfaceTone[]
+	title: string
 	tone?: SurfaceTone
 }>()
 
@@ -29,6 +31,13 @@ const emit = defineEmits<{
 	activate: []
 	deactivate: []
 }>()
+
+function openCase(event: MouseEvent) {
+	if (!href) return
+	if (event.target instanceof Element && event.target.closest("a")) return
+
+	return navigateTo(href)
+}
 </script>
 
 <template>
@@ -36,7 +45,8 @@ const emit = defineEmits<{
 		as="article"
 		variant="plain"
 		data-work-case
-		:class="cn('case', className)"
+		:class="cn('case', href && 'case-linked', className)"
+		@click="openCase"
 		@pointerenter="emit('activate')"
 		@pointerleave="emit('deactivate')"
 	>
@@ -49,25 +59,44 @@ const emit = defineEmits<{
 				:class="cn('case-layer', surfaceTones[revealTone])"
 			/>
 
-			<div data-work-case-layer class="case-image-layer">
+			<div
+				data-work-case-layer
+				:class="
+					cn('case-image-layer', image?.fit === 'contain' && 'media-mat')
+				"
+			>
 				<NuxtImg
+					v-if="image"
 					data-work-case-image
-					class="case-image"
-					:src="image"
-					:alt="imageAlt"
-					width="1456"
-					height="816"
+					:class="
+						cn('case-image', image.fit === 'contain' && 'case-image-contain')
+					"
+					:src="image.src"
+					:alt="image.alt"
+					:width="image.width"
+					:height="image.height"
 					sizes="sm:896px md:1024px lg:768px xl:1024px 2xl:1536px"
 					densities="x1"
 					loading="lazy"
 					draggable="false"
+				/>
+				<MediaPlaceholder
+					v-else
+					data-work-case-image
+					class="case-image"
+					:label="title"
 				/>
 			</div>
 		</div>
 
 		<div class="case-body">
 			<div class="case-line">
-				<h3 data-work-case-reveal class="case-title">{{ client }}</h3>
+				<h3 data-work-case-reveal class="case-title">
+					<NuxtLink v-if="href" class="case-title-link" :to="href">
+						{{ title }}
+					</NuxtLink>
+					<template v-else>{{ title }}</template>
+				</h3>
 			</div>
 
 			<div class="case-line mt-4">
@@ -102,7 +131,15 @@ const emit = defineEmits<{
 @reference '../../assets/css/tailwind.css';
 
 .case {
-	@apply grid cursor-pointer grid-cols-1 items-start gap-8 md:grid-cols-[3fr_2fr] md:gap-12 xl:gap-20;
+	@apply grid grid-cols-1 items-start gap-8 md:grid-cols-[3fr_2fr] md:gap-12 xl:gap-20;
+}
+
+.case-linked {
+	@apply cursor-pointer;
+}
+
+.case-title-link {
+	@apply rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/60;
 }
 
 .case-media {
@@ -122,6 +159,10 @@ const emit = defineEmits<{
 
 .case-image {
 	@apply absolute inset-0 size-full select-none object-cover;
+}
+
+.case-image-contain {
+	@apply p-[13%] media-mat-image;
 }
 
 .case-body {

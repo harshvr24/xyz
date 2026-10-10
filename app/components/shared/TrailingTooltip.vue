@@ -20,7 +20,7 @@ const {
 	active = false,
 	icon,
 	image = "",
-	label = "See Full Project",
+	label = "View details",
 	size = "default",
 } = defineProps<{
 	active?: boolean;

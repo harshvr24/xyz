@@ -3,12 +3,15 @@ import { useIntervalFn } from "@vueuse/core";
 import { shallowRef, useTemplateRef, watch } from "vue";
 import type { ComponentPublicInstance } from "vue";
 import SplitText from "@/components/shared/SplitText.vue";
+import { collectionsRoute } from "@/lib/catalogue";
 import { appIcons } from "@/lib/icons";
 import type { SplitTextResult } from "@/lib/split-text";
 
 interface MoreWorksImage {
+	fit: "contain" | "cover";
 	height: number;
 	src: string;
+	width: number;
 }
 
 const emit = defineEmits<{
@@ -16,20 +19,54 @@ const emit = defineEmits<{
 	deactivate: [];
 }>();
 
-const worksRoute = "/works";
-const titleStart = "View";
-const titleEnd = "work";
-const actionLabel = "Explore Projects";
+const titleStart = "Full";
+const titleEnd = "range";
+const actionLabel = "Explore collections";
 const imageInterval = 750;
 
 const moreWorksImages: readonly MoreWorksImage[] = [
-	{ height: 1919, src: "/images/work/1.png" },
-	{ height: 1919, src: "/images/work/2.png" },
-	{ height: 1620, src: "/images/work/3.png" },
-	{ height: 1919, src: "/images/work/4.png" },
-	{ height: 1919, src: "/images/work/5.png" },
-	{ height: 1919, src: "/images/work/6.png" },
-	{ height: 1919, src: "/images/work/7.png" },
+	{
+		fit: "contain",
+		height: 896,
+		src: "/images/products/leather-goods/soft-crown-bridle.jpg",
+		width: 480,
+	},
+	{
+		fit: "contain",
+		height: 804,
+		src: "/images/products/leather-goods/saddle.jpg",
+		width: 888,
+	},
+	{
+		fit: "cover",
+		height: 1160,
+		src: "/images/products/leather-goods/halter.jpg",
+		width: 800,
+	},
+	{
+		fit: "contain",
+		height: 1226,
+		src: "/images/products/leather-goods/soft-range-halter.jpg",
+		width: 601,
+	},
+	{
+		fit: "contain",
+		height: 687,
+		src: "/images/products/leather-goods/training-roller.jpg",
+		width: 417,
+	},
+	{
+		fit: "contain",
+		height: 584,
+		src: "/images/products/leather-goods/pony-pad.jpg",
+		width: 551,
+	},
+	{
+		fit: "contain",
+		height: 1490,
+		src: "/images/products/horse-rugs/coolex-rug.jpg",
+		width: 1612,
+	},
 ];
 
 const track = useTemplateRef<HTMLElement>("track");
@@ -97,7 +134,7 @@ function setEndSplit(parts: SplitTextResult) {
 function openWorks(event: MouseEvent) {
 	if (event.target instanceof Element && event.target.closest("a")) return;
 
-	return navigateTo(worksRoute);
+	return navigateTo(collectionsRoute);
 }
 </script>
 
@@ -118,10 +155,11 @@ function openWorks(event: MouseEvent) {
 						v-for="(image, index) in moreWorksImages"
 						:key="image.src"
 						class="more-works-image"
+						:class="{ 'more-works-image-contain': image.fit === 'contain' }"
 						:data-active="index === activeImage"
 						:src="image.src"
 						alt=""
-						width="1080"
+						:width="image.width"
 						:height="image.height"
 						sizes="sm:448px"
 						loading="lazy"
@@ -163,7 +201,7 @@ function openWorks(event: MouseEvent) {
 					<NuxtLink
 						ref="actionLink"
 						class="more-works-action-link"
-						:to="worksRoute"
+						:to="collectionsRoute"
 						:aria-label="actionLabel"
 						@pointerenter="hidePreview"
 						@pointerleave="showPreview"
@@ -213,12 +251,16 @@ function openWorks(event: MouseEvent) {
 }
 
 .more-works-media {
-	@apply relative aspect-3/4 overflow-hidden rounded-xl bg-brand-subtle;
+	@apply relative aspect-3/4 overflow-hidden rounded-xl media-mat;
 	width: var(--more-works-image);
 }
 
 .more-works-image {
 	@apply absolute inset-0 size-full select-none object-cover opacity-0;
+}
+
+.more-works-image-contain {
+	@apply p-[10%] media-mat-image;
 }
 
 .more-works-image[data-active="true"] {

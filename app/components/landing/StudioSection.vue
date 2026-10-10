@@ -6,12 +6,12 @@ import type { SplitTextResult } from "@/lib/split-text";
 
 const copyParagraphs = [
    {
-      id: "team",
-      text: "Nine people in one room: editors, designers, engineers and an AI pipeline that does the boring half. No account layer, no handoff tax. You talk to the people doing the work.",
+      id: "range",
+      text: "One house for the whole tack room: leather saddlery, textile rugs, yard accessories and a range for dogs. One order, one standard of finish and one team to talk to.",
    },
    {
       id: "method",
-      text: "Every engagement starts with a hypothesis and ends with a number. If a format does not work, we kill it and say so out loud, in the readout, with the maths attached.",
+      text: "Every piece is checked against its sample before it is packed. If a strap, a seam or a buckle is not right, it goes back to the bench, not into the box.",
    },
 ] as const;
 
@@ -25,7 +25,7 @@ const copySplits = shallowRef<
    Partial<Record<CopyParagraphId, SplitTextResult>>
 >({});
 const studioStatement =
-   "We make work that gets chosen, not just seen. Sharp thinking, fast execution, numbers you can defend.";
+   "We make the gear horses work in and riders trust. Honest materials, careful stitching, quality you can rely on.";
 
 const copyWords = computed(() => {
    const results = copyParagraphs.map(({ id }) => copySplits.value[id]);
@@ -72,10 +72,10 @@ function setCopySplit(id: CopyParagraphId, parts: SplitTextResult) {
                <NuxtImg
                   class="studio-portrait-image"
                   data-studio-portrait-image
-                  src="/images/founder.jpg"
-                  alt="Founder of byroose kicking one leg high beside a lamppost on a sunny street corner"
-                  width="2048"
-                  height="1536"
+                  src="/images/products/leather-goods/saddle.jpg"
+                  alt="Dark brown general purpose saddle with a suede seat"
+                  width="888"
+                  height="804"
                   sizes="sm:1280px md:768px lg:1024px xl:1280px 2xl:1536px"
                   densities="x1"
                   loading="lazy"
@@ -142,11 +142,11 @@ function setCopySplit(id: CopyParagraphId, parts: SplitTextResult) {
 }
 
 .studio-portrait {
-   @apply aspect-4/3 w-full overflow-hidden rounded-2xl;
+   @apply aspect-4/3 w-full overflow-hidden rounded-2xl media-mat;
 }
 
 .studio-portrait-image {
-   @apply size-full object-cover select-none;
+   @apply size-full p-[12%] select-none media-mat-image;
 }
 
 .studio-copy {

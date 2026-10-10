@@ -20,7 +20,7 @@ type SplitListSource = MaybeRefOrGetter<
    readonly (SplitTextResult | undefined)[]
 >;
 
-interface BlogMotionTargets {
+interface ProductGridMotionTargets {
    cardTitleSplits: SplitListSource;
    titleSplit: SplitSource;
 }
@@ -36,20 +36,20 @@ interface CardReveal {
 }
 
 const selectors = {
-   card: "[data-blog-card]",
-   cardMeta: "[data-blog-card-meta]",
-   cta: "[data-blog-cta]",
-   ctaMask: "[data-blog-cta-mask]",
-   heading: "[data-blog-heading]",
+   card: "[data-product-card]",
+   cardMeta: "[data-product-card-meta]",
+   cta: "[data-product-grid-cta]",
+   ctaMask: "[data-product-grid-cta-mask]",
+   heading: "[data-product-grid-heading]",
 } as const;
 
 const refreshPriority = -3;
 const cardRevealStagger = 0.15;
 const titleWordStagger = 0.12;
 
-export function useBlogMotion(
+export function useProductGridMotion(
    scope: MotionScope,
-   { cardTitleSplits, titleSplit }: BlogMotionTargets,
+   { cardTitleSplits, titleSplit }: ProductGridMotionTargets,
 ) {
    const { createMatchMedia, gsap, loadPlugin } = useGsap();
    const { refresh } = useSmoothScroll();

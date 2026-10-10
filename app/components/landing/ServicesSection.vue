@@ -2,6 +2,7 @@
 import { defineAsyncComponent, shallowRef, useTemplateRef } from "vue";
 import SplitText from "@/components/shared/SplitText.vue";
 import WaveUnderline from "@/components/shared/WaveUnderline.vue";
+import type { ProductImage } from "@/lib/catalogue";
 import type { SplitTextResult } from "@/lib/split-text";
 
 const TrailingTooltip = defineAsyncComponent(
@@ -10,33 +11,47 @@ const TrailingTooltip = defineAsyncComponent(
 
 interface Service {
    description: string;
-   image: string;
+   image: ProductImage;
    surface: "canvas" | "dark";
    title: string;
 }
 
-const introLines = ["What can we do", "for"];
+const introLines = ["What can we make", "for"];
 const introUnderlinedWord = "You?";
 const introPhrases = [...introLines, introUnderlinedWord];
 const introTitle = introPhrases.join(" ");
 const lastIntroLineIndex = introLines.length - 1;
-const servicesRoute = "/services";
-const tooltipText = "More Details";
+const craftRoute = "/craft";
+const tooltipText = "See the craft";
 
 const servicesData: Service[] = [
    {
       description:
-         "Visuals, video, reels and site imagery produced through an AI pipeline with a human editor on every asset. Planned as a quarterly slate instead of one-off requests.",
-      image: "/images/hero/5.png",
+         "Bridles, halters, girths, breastplates, saddles and boots. Cut from selected hides, stitched close and finished at the bench.",
+      image: {
+         alt: "",
+         fit: "contain",
+         height: 495,
+         src: "/images/products/leather-goods/stirrup-leather.jpg",
+         status: "placeholder",
+         width: 1393,
+      },
       surface: "canvas",
-      title: "AI Content Creation",
+      title: "Leather Saddlery",
    },
    {
       description:
-         "Design and build in the same sprint. Headless CMS, clean analytics, accessibility that passes audit, a handover your team can maintain.",
-      image: "/images/hero/6.png",
+         "Turnout, stable, fleece and exercise rugs, saddle pads and yard essentials. Cut to sit cleanly over the wither and built for daily use.",
+      image: {
+         alt: "",
+         fit: "contain",
+         height: 1592,
+         src: "/images/products/horse-rugs/rain-rug.jpg",
+         status: "placeholder",
+         width: 2252,
+      },
       surface: "dark",
-      title: "Website Development",
+      title: "Rugs & Textiles",
    },
 ];
 
@@ -161,20 +176,20 @@ function setDescriptionSplit(index: number, parts: SplitTextResult) {
                   <NuxtLink
                      class="service-media"
                      data-service-media
-                     :to="servicesRoute"
-                     :aria-label="`More details about ${service.title}`"
+                     :to="craftRoute"
+                     :aria-label="`See how we make ${service.title}`"
                      @pointerenter="
-                        showTooltip(service.image, tooltipText, 'compact')
+                        showTooltip(service.image.src, tooltipText, 'compact')
                      "
                      @pointerleave="hideTooltip"
                   >
                      <NuxtImg
                         class="service-image"
                         data-service-image
-                        :src="service.image"
-                        alt=""
-                        width="1456"
-                        height="816"
+                        :src="service.image.src"
+                        :alt="service.image.alt"
+                        :width="service.image.width"
+                        :height="service.image.height"
                         sizes="sm:1024px md:1280px lg:1536px"
                         densities="x1"
                         loading="lazy"
@@ -297,10 +312,10 @@ function setDescriptionSplit(index: number, parts: SplitTextResult) {
 }
 
 .service-media {
-   @apply block aspect-[1456/816] w-full origin-bottom overflow-hidden rounded-2xl bg-muted;
+   @apply block aspect-[1456/816] w-full origin-bottom overflow-hidden rounded-2xl media-mat;
 }
 
 .service-image {
-   @apply pointer-events-none size-full object-cover select-none;
+   @apply pointer-events-none size-full p-[6%] select-none media-mat-image;
 }
 </style>

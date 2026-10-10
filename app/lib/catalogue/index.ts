@@ -7,6 +7,7 @@ import type { Product, Range, RangeSlug } from './types'
 
 export { ranges } from './ranges'
 export type {
+	ImageFit,
 	ImageStatus,
 	Product,
 	ProductImage,

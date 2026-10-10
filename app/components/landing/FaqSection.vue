@@ -14,40 +14,40 @@ const faqTitle = 'Frequently Asked Questions'
 
 const faqs = [
 	{
-		id: 'start',
-		question: 'How fast can you start?',
+		id: 'minimums',
+		question: 'Is there a minimum order?',
 		answer:
-			'Kickoff happens within ten working days of a signed scope. Before that, we run a short discovery call to agree on goals, audience, and what success looks like, so the first sprint starts from a clear brief. If the brief is already tight and your assets are ready, a sprint can start sooner.',
+			'Minimums depend on the product, the material and how much of it is custom. Tell us what you have in mind and we will confirm the quantity alongside your quote, including the smallest run we can make without compromising the finish.',
 	},
 	{
-		id: 'in-house',
-		question: 'Do you work with in-house teams?',
+		id: 'samples',
+		question: 'Can we see a sample first?',
 		answer:
-			'Most of the time. We plug into your stand-ups, work inside the tools your team already uses, and keep decisions visible in one shared channel instead of a long email chain. When the work is done, we hand over everything we built with documentation, so your team can run it without waiting on us.',
+			'Yes. We make a sample to your specification before a production run begins, so you can check the leather, the stitching, the fittings and the fit. The approved sample then becomes the standard every piece in the order is checked against.',
 	},
 	{
-		id: 'ai-content',
-		question: 'What does the AI content actually mean?',
+		id: 'custom',
+		question: 'Do you make to our designs?',
 		answer:
-			'A model tuned on your voice and your look, producing visuals, video and reels inside a human review loop. Every asset passes through an editor who checks it against your brand, fixes what the model gets wrong, and decides whether it ships. Nothing publishes without that sign-off.',
+			'We make our own patterns and we make to yours. Colours, leathers, cloth weights, hardware and branding can all be specified, and we will tell you plainly where a change affects the price, the timing or the way a product wears.',
 	},
 	{
-		id: 'single-service',
-		question: 'Can we buy one service on its own?',
+		id: 'timing',
+		question: 'How long does an order take?',
 		answer:
-			'Yes. AI content creation and web development are sold separately, and plenty of clients start with one. They compound when the site and the content are built to the same brief: the imagery is made for the layouts it lives in, and the pages are designed around the content you will actually publish.',
+			'Timing depends on the size of the order, the materials and the season. We give you a production schedule with the quote and keep you posted as the order moves from cutting to packing, so there are no surprises at the end.',
 	},
 	{
-		id: 'reporting',
-		question: 'How do you report results?',
+		id: 'shipping',
+		question: 'How do you ship?',
 		answer:
-			'One dashboard, weekly written readouts, and a monthly decision meeting. The readouts explain what moved and why in plain language rather than a wall of charts. In the monthly meeting we agree on what to double down on and drop the formats that are not working.',
+			'We ship to export buyers and prepare the paperwork that goes with it. Tell us the destination and how you prefer to receive goods, and the quote will set out the terms, the packing and the documents included.',
 	},
 	{
-		id: 'commitment',
-		question: 'Is there a minimum commitment?',
+		id: 'quality',
+		question: 'How is quality checked?',
 		answer:
-			'Ninety days on retainers, so there is enough runway to test, learn, and act on what the numbers show. After that it is month to month. Fixed-scope work, such as a website build, is quoted as a project and runs to its agreed scope and timeline.',
+			'Materials are inspected when they arrive and again as they are cut. Finished pieces are checked against the approved sample before packing, and anything that falls short goes back to the bench rather than into the box.',
 	},
 ]
 
